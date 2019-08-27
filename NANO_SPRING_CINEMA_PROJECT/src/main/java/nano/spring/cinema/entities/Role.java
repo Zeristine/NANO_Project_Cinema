@@ -6,7 +6,6 @@
 package nano.spring.cinema.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,46 +20,17 @@ import javax.persistence.Table;
  * @author admin
  */
 @Entity
-@Table(name = "Company")
-public class Company implements Serializable {
-
+@Table(name = "Role")
+public class Role implements Serializable{
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
-
-    @Column(name = "name", length = 50)
+    
+    @Column(name = "name")
     private String name;
-
-    @OneToMany(mappedBy = "company")
-    private Set<Film> films;
-
-    public Company() {
-        this.films = new HashSet<>();
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Film> getFilms() {
-        return films;
-    }
-
-    public void setFilms(Set<Film> films) {
-        this.films = films;
-    }
-
+    
+    @OneToMany(mappedBy = "role")
+    private Set<FilmPersonRole> filmperson;
 }

@@ -7,11 +7,14 @@ package nano.spring.cinema.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,7 +51,15 @@ public class Account implements Serializable {
     @Column(name = "phone", length = 15)
     private String phone;
 
+    @OneToMany(mappedBy = "account")
+    private Set<OrderFilm> orders;
+
+    @OneToMany(mappedBy = "account")
+    private Set<Point> points;
+
     public Account() {
+        this.orders = new HashSet<>();
+        this.points = new HashSet<>();
     }
 
     public long getId() {
@@ -105,6 +116,22 @@ public class Account implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Set<OrderFilm> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<OrderFilm> orders) {
+        this.orders = orders;
+    }
+
+    public Set<Point> getPoints() {
+        return points;
+    }
+
+    public void setPoints(Set<Point> points) {
+        this.points = points;
     }
 
 }

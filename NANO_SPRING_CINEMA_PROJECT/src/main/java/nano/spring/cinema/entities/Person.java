@@ -21,22 +21,22 @@ import javax.persistence.Table;
  * @author admin
  */
 @Entity
-@Table(name = "Company")
-public class Company implements Serializable {
+@Table
+public class Person implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
-    @Column(name = "name", length = 50)
+    @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "company")
-    private Set<Film> films;
+    @OneToMany(mappedBy = "person")
+    private Set<FilmPersonRole> filmrole;
 
-    public Company() {
-        this.films = new HashSet<>();
+    public Person() {
+        this.filmrole = new HashSet<>();
     }
 
     public long getId() {
@@ -55,12 +55,12 @@ public class Company implements Serializable {
         this.name = name;
     }
 
-    public Set<Film> getFilms() {
-        return films;
+    public Set<FilmPersonRole> getFilmrole() {
+        return filmrole;
     }
 
-    public void setFilms(Set<Film> films) {
-        this.films = films;
+    public void setFilmrole(Set<FilmPersonRole> filmrole) {
+        this.filmrole = filmrole;
     }
 
 }
