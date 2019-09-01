@@ -32,7 +32,7 @@ public class Account implements Serializable {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "username", length = 50)
+    @Column(name = "username", length = 50, unique = true)
     private String username;
 
     @Column(name = "password", length = 50)
