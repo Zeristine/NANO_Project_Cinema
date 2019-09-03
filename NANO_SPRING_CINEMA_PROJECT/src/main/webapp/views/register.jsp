@@ -10,29 +10,36 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Spring Cinema</title>
+        <title>Register - Spring Cinema</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
         <!------ Include the above in your HEAD tag ---------->
-
         <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>
             function validateRegister() {
-                console.log("validateRegister()");    
-                var username = document.forms["myForm"]["username"].value.trim();
-                var password = document.forms["myForm"]["password"].value.trim();
-                var retype = document.forms["myForm"]["retype"].value.trim();
-                var firstname = document.forms["myForm"]["firstname"].value.trim();
-                var lastname = document.forms["myForm"]["lastname"].value.trim();
-                var birthdate = document.forms["myForm"]["birthdate"].value.trim();
-                var phone = document.forms["myForm"]["phone"].value.trim();
+                console.log("validateRegister()");
+                var username = $("input[name=username]").val().trim();
+                var password = $("input[name=password").val().trim();
+                var retype = $("input[name=retype").val().trim();
+                var firstname = $("input[name=firstname").val().trim();
+                var lastname = $("input[name=lastname").val().trim();
+                var birthdate = $("input[name=birthdate").val().trim();
+                var phone = $("input[name=phone").val().trim();
                 var msg = "";
                 if (username.length == 0 || password.length == 0 || retype.length == 0
                         || firstname.length == 0 || lastname.length == 0
                         || birthdate.length == 0 || phone.length == 0) {
-                    msg = "Please input all fields";
+                    msg = "Please input all fields \n"
+                            + "Username :" + username.length + "\n"
+                            + "Password :" + password.length + "\n"
+                            + "Re :" + retype.length + "\n"
+                            + "First :" + firstname.length + "\n"
+                            + "Last :" + lastname.length + "\n"
+                            + "Birth :" + birthdate.length + "\n"
+                            + "Phone :" + phone.length;
+                    +"\n"
                 } else {
                     if (password.length < 5) {
                         msg += "Password length >= 5";
@@ -113,43 +120,44 @@
                                     Register success, click here to <a href="#">Login</a>
                                 </div>
                             </c:if>
+                        </form>
                     </div>
                 </div>
                 <div class="col" style="width: 10%"></div>
             </div>
         </div>   
-<!--        <form action="register" method="POST" name="myForm" onsubmit="return validateRegister()">
-        <div class="form-register-row">
-            <label>Username</label>
-            <input type="text" name="username" value="" />
-        </div>
-        <div class="form-register-row">
-            <label>Password</label>
-            <input type="password" name="password" value="" />
-        </div>
-        <div class="form-register-row">
-            <label>Confirm Password</label>
-            <input type="password" name="retype" value="" />
-        </div>
-        <div class="form-register-row">
-            <label>Firstname</label>
-            <input type="text" name="firstname" value="" />
-        </div>
-        <div class="form-register-row">
-            <label>Lastname</label>
-            <input type="text" name="lastname" value="" />
-        </div>
-        <div class="form-register-row">
-            <label>Birthdate</label>
-            <input type="text" name="birthdate" value="" />
-        </div>
-        <div class="form-register-row">
-            <label>Phone</label>
-            <input type="text" name="phone" value="" />
-        </div>
-        <div>
-            <input type="submit" class="btn btn-info" value="Register" />
-        </div>
-        </form>-->
+        <!--        <form action="register" method="POST" name="myForm" onsubmit="return validateRegister()">
+                <div class="form-register-row">
+                    <label>Username</label>
+                    <input type="text" name="username" value="" />
+                </div>
+                <div class="form-register-row">
+                    <label>Password</label>
+                    <input type="password" name="password" value="" />
+                </div>
+                <div class="form-register-row">
+                    <label>Confirm Password</label>
+                    <input type="password" name="retype" value="" />
+                </div>
+                <div class="form-register-row">
+                    <label>Firstname</label>
+                    <input type="text" name="firstname" value="" />
+                </div>
+                <div class="form-register-row">
+                    <label>Lastname</label>
+                    <input type="text" name="lastname" value="" />
+                </div>
+                <div class="form-register-row">
+                    <label>Birthdate</label>
+                    <input type="text" name="birthdate" value="" />
+                </div>
+                <div class="form-register-row">
+                    <label>Phone</label>
+                    <input type="text" name="phone" value="" />
+                </div>
+                <div>
+                    <input type="submit" class="btn btn-info" value="Register" />
+                </div>
+                </form>-->
     </body>
 </html>

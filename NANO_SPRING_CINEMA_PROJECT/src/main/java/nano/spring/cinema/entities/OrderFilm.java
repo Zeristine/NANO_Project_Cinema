@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,9 +41,65 @@ public class OrderFilm implements Serializable {
     private String status;
 
     @ManyToOne
+    @JoinColumn(name = "showtimeId")
+    private ShowTime showTime;
+
+    @ManyToOne
     @JoinColumn(name = "accountId")
     private Account account;
 
     @OneToMany(mappedBy = "order")
     private Set<Ticket> tickets;
+
+    public OrderFilm() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public ShowTime getShowTime() {
+        return showTime;
+    }
+
+    public void setShowTime(ShowTime showTime) {
+        this.showTime = showTime;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
 }

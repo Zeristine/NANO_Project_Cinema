@@ -21,27 +21,31 @@ import org.springframework.web.servlet.ModelAndView;
  *
  * @author HaAnh
  */
-
 @Controller
 public class AccountController {
-    
+
     @Autowired
     private AccountRepository accountRepo;
-    
+
     private static final Logger LOG = Logger.getLogger(AccountController.class.getName());
-    
-    @RequestMapping(value = "form-register", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/form-register", method = RequestMethod.GET)
     public String registerPage() {
         return "register";
     }
-    
-    @RequestMapping(value = "register", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/form-login", method = RequestMethod.GET)
+    public String loginPage() {
+        return "login";
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView register(@RequestParam(required = false) String username,
-                                @RequestParam(required = false) String password,
-                                @RequestParam(required = false) String firstname,
-                                @RequestParam(required = false) String lastname,
-                                @RequestParam(required = false) String birthdate,
-                                @RequestParam(required = false) String phone){
+            @RequestParam(required = false) String password,
+            @RequestParam(required = false) String firstname,
+            @RequestParam(required = false) String lastname,
+            @RequestParam(required = false) String birthdate,
+            @RequestParam(required = false) String phone) {
         ModelAndView m = new ModelAndView("register");
         try {
             Account acc = new Account();
@@ -51,8 +55,12 @@ public class AccountController {
             acc.setLastname(lastname);
             acc.setBirthdate(Date.valueOf(birthdate));
             acc.setPhone(phone);
-            accountRepo.save(acc);
-            m.addObject("success", true);
+            if (accountRepo.findByUsername(username).size() > 0) {
+                m.addObject("msg", "Username exists, please choose another!");
+            } else {
+                accountRepo.save(acc);
+                m.addObject("success", true);
+            }
         } catch (Exception e) {
             LOG.log(Level.SEVERE, e.getMessage());
             String msg = "Error occur!";
@@ -63,4 +71,5 @@ public class AccountController {
         }
         return m;
     }
+
 }
