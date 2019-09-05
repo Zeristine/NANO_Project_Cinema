@@ -16,6 +16,7 @@ import nano.spring.cinema.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,7 +34,7 @@ public class FilmController {
     @Autowired
     private FilmRepository filmRepository;
     
-    @RequestMapping(value = "current-films", method = RequestMethod.GET)
+    @RequestMapping(value = "/current-films", method = RequestMethod.GET)
     public ModelAndView getFilms(){
         ModelAndView model = new ModelAndView("film-list");
         Date currentDate = new Date(System.currentTimeMillis());
@@ -45,7 +46,7 @@ public class FilmController {
         return model;
     }
     
-    @RequestMapping(value = "to-be-out-films", method = RequestMethod.GET)
+    @RequestMapping(value = "/to-be-out-films", method = RequestMethod.GET)
     public ModelAndView getToBeOutFilms(){
         ModelAndView m = new ModelAndView("film-list");
         Date currentDate = new Date(System.currentTimeMillis());
@@ -55,8 +56,8 @@ public class FilmController {
         return m;
     }
     
-    @RequestMapping(value = "film-detail", method = RequestMethod.POST)
-    public String getFilmDetailById(@RequestParam(value = "id") long id, ModelMap m){
+    @RequestMapping(value = "/film-detail-{id}-{name}", method = RequestMethod.GET)
+    public String getFilmDetailById(@PathVariable(value = "id") long id, ModelMap m){
         Film film = filmRepository.findOne(id);
         m.addAttribute("film", film);
         Date currentDate = new Date(System.currentTimeMillis());
@@ -73,8 +74,11 @@ public class FilmController {
         return "film-detail";
     }
     
-    @RequestMapping(value = "search-film", method = RequestMethod.POST)
-    public String searchFilmsByName(@RequestParam(value = "name") String name, ModelMap m){
+    @RequestMapping(value = "/search-film", method = RequestMethod.POST)
+    public String searchFilmsByName(
+            @RequestParam(value = "name") String name,
+            ModelMap m
+    ){
         List<Film> films = filmRepository.findFilmsByName(name.trim());
         List<Film> currentFilms = new ArrayList<>();
         List<Film> toBeOutFilms = new ArrayList<>();
@@ -89,6 +93,7 @@ public class FilmController {
         m.addAttribute("films", currentFilms);
         m.addAttribute("current", true);
         m.addAttribute("toBeOutFilms", toBeOutFilms);
+        m.addAttribute("search", name);
         LOG.log(Level.INFO, "search value: " + name);
         return "film-list";
     }

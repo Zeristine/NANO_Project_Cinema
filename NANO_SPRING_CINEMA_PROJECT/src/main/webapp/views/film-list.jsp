@@ -14,45 +14,67 @@
         <style>
             div[name=film]{
                 float: left;
-                width: 150px;
-                height: 200px;
+                width: 200px;
+                height: 450px;
                 margin: 5px 10px;
             }
 
             div[name=film] img{
+                float: left;
                 width: 100%;
-                height: 150px;
+                height: 60%;
             }
             div[name=title]{
+                float: left;
                 width: 100%;
-                height: 50px;
+                height: 39%;                
+            }            
+            ul{
+                list-style: square;
+            }
+            div[name=search-form]{
+                width: 100%;
+            }
+            div[name=search-form] input[type=text]{
+                width: 80%;
+            }
+            div[name=search-form] input[type=submit]{
+                width: 19%;
             }
         </style>
     </head>
     <body>
-        <form action="search-film" method="POST">
-            <input type="text" name="name" value="" placeholder="Search film" />
-            <input type="submit" value="Search" />
-        </form>
+        <div name="search-form">
+            <input type="text" name="name" value="${search}" placeholder="Search film" />
+            <input type="submit" value="Search" onclick="search()"/>
+        </div>
+        <hr/>
         <c:if test="${not empty films}">
             <c:forEach var="f" items="${films}">
                 <div name="film">
                     <img src="${f.image}"/>
                     <div name="title" >
                         <h3>${f.name}</h3>
-                    </div>
-                    <ul>
-                        <li>Category: </li>
-                        <li>Duration: ${f.duration}</li>
-                        <li>Start Date: ${f.fromDate}</li>
-                    </ul>
-                    <c:if test="${current eq true}">
-                        <a href="book-ticket/${f.id}">Book Ticket</a>
-                    </c:if>
-                    <form action="film-detail" method="POST">
-                        <input type="hidden" name="id" value="${f.id}" />
-                        <input type="submit" value="View Detail" />
-                    </form>
+                        <ul>
+                            <li>Category:
+                                <c:forEach var="cg" items="${f.categories}" >
+                                    <a href="category-${cg.name}" >
+                                        <button>${cg.name}</button>
+                                    </a>
+                                </c:forEach>
+                            </li>
+                            <li>Duration: ${f.duration}</li>
+                            <li>Start Date: ${f.fromDate}</li>
+                        </ul>
+                        <c:if test="${current eq true}">
+                            <a href="book-ticket/${f.id}">
+                                <button>Book Ticket</button>
+                            </a>
+                        </c:if>                                                    
+                        <a href="film-detail-${f.id}-${f.name}" >
+                            <button>Show Detail</button>
+                        </a>                        
+                    </div>                    
                 </div>
             </c:forEach>
         </c:if>

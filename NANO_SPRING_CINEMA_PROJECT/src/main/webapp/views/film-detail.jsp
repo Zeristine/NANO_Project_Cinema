@@ -5,61 +5,118 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Spring Cinema</title>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="resources/js/login-register.js"></script>
+        <script type="text/javascript" src="resources/js/home.js"></script>
+        <link rel="stylesheet" href="resources/css/main.css"/>
+        <style>
+            table{
+                width: 100%;
+                text-align: left;
+            }
+            .img-content{
+                text-align: center;
+            }
+            .description{
+                text-align: left;   
+            }
+            iframe{
+                width: 100%;                
+                height: 500px;
+            }            
+        </style>
     </head>
     <body>
-        <img src="${film.image}"/>
+        <div class="header" >
+            <div class="left" >
+                <button onclick="backToHome()" >NANO Spring Cinema</button>
+            </div>
+            <div class="right hide" name="not-logged">
+                <a href="form-register" >
+                    <button>Register</button>
+                </a>
+                <a href="form-login">
+                    <button>Log in</button>
+                </a>
+                <button onclick="getTicketForm(this)">Book Ticket</button>                
+                <button onclick=getTicketPriceList(this)">Ticket Price</button>                
+            </div>
+            <div class="right hide" name="logged">
+                <button onclick="logout()" >Log out</button>           
+                <button name="logged" onclick="showProfile(this)"></button>
+                <button onclick="getTicketForm(this)">Book Ticket</button>                
+                <button onclick="getTicketPriceList(this)">Ticket Price</button>                
+            </div>
+        </div>        
         <table border="0">
             <tr>
-                <td colspan="2">
-                    ${film.name}
+                <td rowspan="8" class="img-content">
+                    <img src="${film.image}"/>
                 </td>
             </tr>
             <tr>
-                <td>Time:</td>
+                <th colspan="1">
+                    <h2>${film.name}</h2>
+                </th>
+                <td>
+                    <c:if test="${current eq true}">
+                        <a href="book-ticket/${f.id}">
+                            <button>Book Ticket</button>
+                        </a>    
+                    </c:if>
+                </td>
+            </tr>
+            <tr>
+                <th>Time:</th>
                 <td>${film.fromDate} - ${film.toDate}</td>
             </tr>
             <tr>
-                <td>Category:</td>
+                <th>Category:</th>
+                <td>
+                    <c:forEach var="cg" items="${film.categories}" >
+                        <a href="category-${cg.name}" >
+                            <button>${cg.name}</button>
+                        </a>
+                    </c:forEach>
+                </td>
+            </tr>
+            <tr>
+                <th>Actors:</th>
                 <td></td>
             </tr>
             <tr>
-                <td>Actors:</td>
+                <th>Director</th>
                 <td></td>
             </tr>
             <tr>
-                <td>Director</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Duration</td>
+                <th>Duration</th>
                 <td>${film.duration}</td>
             </tr>
             <tr>
-                <td>Company</td>
-                <td></td>
+                <th>Company</th>
+                <td>${film.company.name}</td>
             </tr>
-            <c:if test="${current eq true}">
-                <tr>
-                    <td>
-                        <a href="book-ticket/${f.id}">Book Ticket</a>
-                    </td>
-                </tr>
-            </c:if>
-        </table>
-            <div>
-                <h4>Description</h4>
-                ${film.description}
-            </div>
-            <div>
-                Trailer
-                 <iframe width="420" height="280" src="${film.video}"></iframe> 
-            </div>
+            <tr>
+                <th colspan="4">Description</th>                
+
+            </tr>
+            <tr>
+                <td colspan="4" class="description" >
+                    <p>${film.description}</p>
+                </td>                
+            </tr>
+            <tr>
+                <th colspan="4">Trailer</th>                
+            </tr>
+            <tr>
+                <td colspan="4"><iframe width="420" height="280" src="${film.video}"></iframe> </td>
+            </tr>            
+        </table>                
     </body>
 </html>

@@ -5,7 +5,10 @@
  */
 package nano.spring.cinema.controllers;
 
+import nano.spring.cinema.repositories.TimeTableRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -16,8 +19,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class TicketController {
 
+    @Autowired
+    private TimeTableRepository timeTableRepository;
+    
     @RequestMapping(value = "/ticket-price", method = RequestMethod.POST)
-    public String getTicketPrice() {
+    public String getTicketPrice(
+            ModelMap model
+    ) {
+        model.addAttribute("prices", timeTableRepository.findAll());
         return "ticket-price";
     }
 

@@ -75,3 +75,15 @@ function showProfile(button) {
 function reload() {
     window.location.reload();
 }
+
+function search() {
+    var search = $("input[name=name]").val();
+    $.ajax({
+        type: 'POST',
+        url: "search-film",
+        data: {name: search},
+        success: function (a) {
+            $("#main-content").html(a);
+        }
+    });
+}
