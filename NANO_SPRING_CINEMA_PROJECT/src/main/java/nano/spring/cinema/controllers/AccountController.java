@@ -13,6 +13,7 @@ import nano.spring.cinema.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -89,10 +90,10 @@ public class AccountController {
         }
     }
     
-    @RequestMapping(value = "/account-profile", method = RequestMethod.POST)
+    @RequestMapping(value = "/account-profile-{id}", method = RequestMethod.GET)
     public String getProfile(
             ModelMap model,
-            @RequestParam(value = "id") long id
+            @PathVariable(value = "id") long id
     ) {
         model.addAttribute("account", accountRepo.findOne(id));
         return "account-profile";

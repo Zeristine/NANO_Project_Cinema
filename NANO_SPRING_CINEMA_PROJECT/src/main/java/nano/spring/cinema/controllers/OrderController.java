@@ -22,7 +22,7 @@ public class OrderController {
     @Autowired
     private OrderRepository orderRepository;    
     
-    @RequestMapping(value = "/form-order", method = RequestMethod.POST)
+    @RequestMapping(value = "/form-order", method = RequestMethod.GET)
     public String getFormOrder(){
         return "order-book-main";
     }

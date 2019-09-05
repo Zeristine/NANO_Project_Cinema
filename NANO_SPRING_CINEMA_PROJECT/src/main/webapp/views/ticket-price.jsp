@@ -10,7 +10,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Ticket Price - Spring Cinema</title>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="resources/js/login-register.js"></script>
+        <script type="text/javascript" src="resources/js/main.js"></script>
+        <link rel="stylesheet" href="resources/css/main.css"/>
         <style>
             .price-list-header{
                 float: left;
@@ -32,6 +36,37 @@
         </style>
     </head>
     <body>
+        <div class="header" >
+            <div class="left" >
+                <button onclick="backToHome()" >NANO Spring Cinema</button>
+            </div>
+            <div class="right hide" name="not-logged">
+                <a href="form-register" >
+                    <button>Register</button>
+                </a>
+                <a href="form-login">
+                    <button>Log in</button>
+                </a>
+                <a href="form-order">
+                    <button class="">Book Ticket</button>                
+                </a>                
+                <a href="#">
+                    <button class="active" >Ticket Price</button>                
+                </a>
+            </div>
+            <div class="right hide" name="logged">
+                <button onclick="logout()" >Log out</button>           
+                <a name="logged-link">
+                    <button name="logged"></button>    
+                </a>
+                <a href="form-order">
+                    <button class="">Book Ticket</button>                
+                </a>                
+                <a href="#">
+                    <button class="active" >Ticket Price</button>                
+                </a>
+            </div>
+        </div>        
         <div class="price-list-header">
             <b>Ticket Price</b>
         </div>        

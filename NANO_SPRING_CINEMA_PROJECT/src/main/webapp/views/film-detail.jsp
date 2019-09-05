@@ -13,7 +13,7 @@
         <title>Spring Cinema</title>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script type="text/javascript" src="resources/js/login-register.js"></script>
-        <script type="text/javascript" src="resources/js/home.js"></script>
+        <script type="text/javascript" src="resources/js/main.js"></script>
         <link rel="stylesheet" href="resources/css/main.css"/>
         <style>
             table{
@@ -32,7 +32,7 @@
             }            
         </style>
     </head>
-    <body>
+    <body>        
         <div class="header" >
             <div class="left" >
                 <button onclick="backToHome()" >NANO Spring Cinema</button>
@@ -44,14 +44,24 @@
                 <a href="form-login">
                     <button>Log in</button>
                 </a>
-                <button onclick="getTicketForm(this)">Book Ticket</button>                
-                <button onclick=getTicketPriceList(this)">Ticket Price</button>                
+                <a href="form-order">
+                    <button class="">Book Ticket</button>                    
+                </a>
+                <a href="ticket-price">
+                    <button class="">Ticket Price</button>                
+                </a>                
             </div>
             <div class="right hide" name="logged">
                 <button onclick="logout()" >Log out</button>           
-                <button name="logged" onclick="showProfile(this)"></button>
-                <button onclick="getTicketForm(this)">Book Ticket</button>                
-                <button onclick="getTicketPriceList(this)">Ticket Price</button>                
+                <a name="logged-link">
+                    <button name="logged"></button>    
+                </a>
+                <a href="form-order">
+                    <button class="">Book Ticket</button>                    
+                </a>
+                <a href="ticket-price">
+                    <button class="">Ticket Price</button>                
+                </a>                
             </div>
         </div>        
         <table border="0">

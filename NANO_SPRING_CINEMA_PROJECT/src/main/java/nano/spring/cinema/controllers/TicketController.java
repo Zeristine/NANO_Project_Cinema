@@ -22,7 +22,7 @@ public class TicketController {
     @Autowired
     private TimeTableRepository timeTableRepository;
     
-    @RequestMapping(value = "/ticket-price", method = RequestMethod.POST)
+    @RequestMapping(value = "/ticket-price", method = RequestMethod.GET)
     public String getTicketPrice(
             ModelMap model
     ) {
