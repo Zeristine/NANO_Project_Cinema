@@ -24,4 +24,7 @@ public interface FilmRepository extends JpaRepository<Film, Long> {
     
     @Query("select f from Film f where f.fromDate > :currentDate")
     public List<Film> findToBeOutFilms(@Param(value = "currentDate") Date currentDate);
+    
+    @Query("select f from Film f where f.name like %:name%")
+    public List<Film> findFilmsByName(@Param(value = "name") String name);
 }

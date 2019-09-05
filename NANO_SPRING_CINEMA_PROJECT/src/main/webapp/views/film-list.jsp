@@ -30,6 +30,10 @@
         </style>
     </head>
     <body>
+        <form action="search-film" method="POST">
+            <input type="text" name="name" value="" placeholder="Search film" />
+            <input type="submit" value="Search" />
+        </form>
         <c:if test="${not empty films}">
             <c:forEach var="f" items="${films}">
                 <div name="film">
@@ -51,6 +55,25 @@
                     </form>
                 </div>
             </c:forEach>
-        </c:if>       
+        </c:if>
+        <c:if test="${not empty toBeOutFilms}">
+            <c:forEach var="f" items="${toBeOutFilms}">
+                <div name="film">
+                    <img src="${f.image}"/>
+                    <div name="title" >
+                        <h3>${f.name}</h3>
+                    </div>
+                    <ul>
+                        <li>Category: </li>
+                        <li>Duration: ${f.duration}</li>
+                        <li>Start Date: ${f.fromDate}</li>
+                    </ul>
+                    <form action="film-detail" method="POST">
+                        <input type="hidden" name="id" value="${f.id}" />
+                        <input type="submit" value="View Detail" />
+                    </form>
+                </div>
+            </c:forEach>
+        </c:if>
     </body>
 </html>

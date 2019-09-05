@@ -5,6 +5,7 @@
  */
 package nano.spring.cinema.controllers;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -70,5 +71,25 @@ public class FilmController {
         film.setVideo(video);
         LOG.log(Level.INFO, "film id: " + id + " - film name: " + film.getName());
         return "film-detail";
+    }
+    
+    @RequestMapping(value = "search-film", method = RequestMethod.POST)
+    public String searchFilmsByName(@RequestParam(value = "name") String name, ModelMap m){
+        List<Film> films = filmRepository.findFilmsByName(name.trim());
+        List<Film> currentFilms = new ArrayList<>();
+        List<Film> toBeOutFilms = new ArrayList<>();
+        Date currentDate = new Date(System.currentTimeMillis());
+        for (Film film : films) {
+            if (film.getFromDate().after(currentDate)) {
+                toBeOutFilms.add(film);
+            } else {
+                currentFilms.add(film);
+            }
+        }
+        m.addAttribute("films", currentFilms);
+        m.addAttribute("current", true);
+        m.addAttribute("toBeOutFilms", toBeOutFilms);
+        LOG.log(Level.INFO, "search value: " + name);
+        return "film-list";
     }
 }
