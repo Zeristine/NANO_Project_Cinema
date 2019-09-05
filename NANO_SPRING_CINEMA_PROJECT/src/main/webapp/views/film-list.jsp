@@ -10,16 +10,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Spring Cinema</title>
         <style>
             div[name=film]{
                 float: left;
                 width: 150px;
                 height: 200px;
-                text-align: center;
                 margin: 5px 10px;
             }
-            
+
             div[name=film] img{
                 width: 100%;
                 height: 150px;
@@ -31,13 +30,27 @@
         </style>
     </head>
     <body>
-        <c:forEach var="f" items="${films}" >
-            <div name="film" >
-                <img src="${f.image}"/>
-                <div name="title" >
-                    <label>${f.name}</label>
+        <c:if test="${not empty films}">
+            <c:forEach var="f" items="${films}">
+                <div name="film">
+                    <img src="${f.image}"/>
+                    <div name="title" >
+                        <h3>${f.name}</h3>
+                    </div>
+                    <ul>
+                        <li>Category: </li>
+                        <li>Duration: ${f.duration}</li>
+                        <li>Start Date: ${f.fromDate}</li>
+                    </ul>
+                    <c:if test="${current eq true}">
+                        <a href="book-ticket/${f.id}">Book Ticket</a>
+                    </c:if>
+                    <form action="film-detail" method="POST">
+                        <input type="hidden" name="id" value="${f.id}" />
+                        <input type="submit" value="View Detail" />
+                    </form>
                 </div>
-            </div>
-        </c:forEach>
+            </c:forEach>
+        </c:if>       
     </body>
 </html>

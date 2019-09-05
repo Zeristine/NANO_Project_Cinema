@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Welcome to Spring Cinema</title>
+        <title>Spring Cinema</title>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script type="text/javascript" src="resources/js/login-register.js"></script>
         <script type="text/javascript" src="resources/js/home.js"></script>

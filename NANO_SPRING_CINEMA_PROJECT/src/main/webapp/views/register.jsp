@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Register - Spring Cinema</title>
+        <title>Spring Cinema</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
         <!------ Include the above in your HEAD tag ---------->
@@ -125,38 +125,5 @@
                 <div class="col" style="width: 10%"></div>
             </div>
         </div>   
-        <!--        <form action="register" method="POST" name="myForm" onsubmit="return validateRegister()">
-                <div class="form-register-row">
-                    <label>Username</label>
-                    <input type="text" name="username" value="" />
-                </div>
-                <div class="form-register-row">
-                    <label>Password</label>
-                    <input type="password" name="password" value="" />
-                </div>
-                <div class="form-register-row">
-                    <label>Confirm Password</label>
-                    <input type="password" name="retype" value="" />
-                </div>
-                <div class="form-register-row">
-                    <label>Firstname</label>
-                    <input type="text" name="firstname" value="" />
-                </div>
-                <div class="form-register-row">
-                    <label>Lastname</label>
-                    <input type="text" name="lastname" value="" />
-                </div>
-                <div class="form-register-row">
-                    <label>Birthdate</label>
-                    <input type="text" name="birthdate" value="" />
-                </div>
-                <div class="form-register-row">
-                    <label>Phone</label>
-                    <input type="text" name="phone" value="" />
-                </div>
-                <div>
-                    <input type="submit" class="btn btn-info" value="Register" />
-                </div>
-                </form>-->
     </body>
 </html>

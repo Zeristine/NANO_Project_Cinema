@@ -5,8 +5,8 @@ $(document).ready(function () {
 
 function loadFilms(){
     $.ajax({
-        type: 'POST',
-        url: "films",
+        type: 'GET',
+        url: "current-films",
         success: function (a) {
             $("#film-content").html(a);
         }

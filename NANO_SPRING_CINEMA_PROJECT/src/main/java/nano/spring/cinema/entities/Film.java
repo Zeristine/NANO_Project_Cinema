@@ -11,6 +11,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,7 +40,7 @@ public class Film implements Serializable {
     private String name;
 
     @Column(name = "duration")
-    private int duration;
+    private Integer duration;
 
     @Column(name = "fromDate")
     @Temporal(TemporalType.DATE)
@@ -61,14 +62,14 @@ public class Film implements Serializable {
     @Column(name = "filmType")
     private String filmType;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Category> categories;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "companyId")
     private Company company;
 
-    @OneToMany(mappedBy = "film")
+    @OneToMany(mappedBy = "film", fetch = FetchType.EAGER)
     private Set<FilmPersonRole> personrole;
 
     public Film() {
@@ -90,11 +91,11 @@ public class Film implements Serializable {
         this.name = name;
     }
 
-    public int getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 
