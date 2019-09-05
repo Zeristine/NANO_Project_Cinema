@@ -42,6 +42,7 @@ function login() {
                 var name = a.substring(0, pos);
                 var id = a.substring(pos+1);                
                 window.localStorage.setItem("id", id);
+                window.localStorage.setItem("name", name);
                 alert("Welcome, " + name);
                 window.location.replace("home");
             }

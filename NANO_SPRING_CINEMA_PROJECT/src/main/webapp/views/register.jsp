@@ -109,14 +109,14 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <p class="text-center">
-                                            Already have an account? <a href="#">Login</a>
+                                            Already have an account? <a href="form-login">Login</a>
                                         </p>
                                     </div>
                                 </div>
                             </c:if>
                             <c:if test="${success eq true}">
                                 <div class="text-center">
-                                    Register success, click here to <a href="#">Login</a>
+                                    Register success, click here to <a href="form-login">Login</a>
                                 </div>
                             </c:if>
                         </form>

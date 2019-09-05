@@ -8,6 +8,7 @@ package nano.spring.cinema.controllers;
 import java.util.Date;
 import java.util.HashSet;
 import nano.spring.cinema.entities.Category;
+import nano.spring.cinema.entities.Company;
 import nano.spring.cinema.entities.Film;
 import nano.spring.cinema.entities.FilmPersonRole;
 import nano.spring.cinema.repositories.AccountRepository;
@@ -43,9 +44,9 @@ public class InitialController {
 
     @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
     public String toHomePage() {
-//        if (filmRepository.count() == 0) {
+        if (filmRepository.count() == 0) {
             createData();
-//        }
+        }
         return "home";
     }
 
@@ -60,16 +61,20 @@ public class InitialController {
         f.setPersonrole(new HashSet<FilmPersonRole>());
         f.setFromDate(new Date());
         f.setToDate(new Date());
-//        addCategory("Action", f);
-//        addCategory("Horror", f);
-//        addCategory("Adventure", f);
-//        addCategory("Comedy", f);
+        f = filmRepository.save(f);
+        Company c = new Company();
+        c.setName("Marvel Studio");
+        f.setCompany(companyRepository.save(c));
+        addCategory("Action", f);
+        addCategory("Horror", f);
+        addCategory("Adventure", f);
+        addCategory("Comedy", f);
         filmRepository.save(f);
     }
 
-//    private void addCategory(String categoryname,Film f){
-//        Category c = new Category();
-//        c.setName(categoryname);
-//        f.getCategories().add(categoryRepository.save(c));
-//    }
+    private void addCategory(String categoryname, Film f) {
+        Category c = new Category();
+        c.setName(categoryname);
+        f.getCategories().add(categoryRepository.save(c));
+    }
 }

@@ -26,7 +26,7 @@
                     <div class="myform form ">
                         <div class="logo mb-3">
                             <div class="col-md-12 text-center">
-                                <h1>Register new Account</h1>
+                                <h1>Log into an Account</h1>
                             </div>
                         </div>
                         <div class="form-group">
@@ -40,7 +40,7 @@
                                    required/>
                         </div>                                                        
                         <div class="col-md-12 text-center mb-3">                                
-                            <input type="submit" class="btn btn-block mybtn btn-primary tx-tfm" value="Register" 
+                            <input type="submit" class="btn btn-block mybtn btn-primary tx-tfm" value="Login" 
                                    onclick="login()"/>
                         </div>          
                     </div>
