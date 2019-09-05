@@ -14,8 +14,8 @@ $(document).ready(function () {
 
 function loadFilms() {
     $.ajax({
-        type: 'POST',
-        url: "films",
+        type: 'GET',
+        url: "current-films",
         success: function (a) {
             $("#main-content").html(a);
         }
