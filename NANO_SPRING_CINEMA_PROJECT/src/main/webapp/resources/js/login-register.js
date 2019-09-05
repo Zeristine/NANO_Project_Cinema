@@ -60,3 +60,7 @@ function getName(id) {
         }
     });
 }
+
+function backToHome(){
+    window.location.replace("home");
+}

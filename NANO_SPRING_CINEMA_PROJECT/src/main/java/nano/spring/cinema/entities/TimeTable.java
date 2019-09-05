@@ -43,6 +43,9 @@ public class TimeTable implements Serializable {
     @Temporal(TemporalType.TIME)
     private Date endTime;
 
+    @Column(name = "price")
+    private double price;
+
     public TimeTable() {
     }
 
@@ -84,6 +87,14 @@ public class TimeTable implements Serializable {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
 }

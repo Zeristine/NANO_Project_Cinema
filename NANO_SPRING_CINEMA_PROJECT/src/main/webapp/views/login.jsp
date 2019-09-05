@@ -15,10 +15,25 @@
         <!------ Include the above in your HEAD tag ---------->
         <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="resources/css/main.css"/>                
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script type="text/javascript" src="resources/js/login-register.js"></script>
+        <script type="text/javascript" src="resources/js/login-register.js"></script>        
     </head>
     <body>
+        <div class="header" >
+            <div class="left" >
+                <button onclick="backToHome()" >NANO Spring Cinema</button>
+            </div>
+            <div class="right" name="not-logged">
+                <a href="form-register" >
+                    <button>Register</button>
+                </a>
+                <a href="#">
+                    <button class="active" >Log in</button>
+                </a>
+                <button onclick="">Ticket Price</button>
+            </div>            
+        </div>        
         <div class="container">
             <div class="row">
                 <div class="col" style="width: 10%"></div>
