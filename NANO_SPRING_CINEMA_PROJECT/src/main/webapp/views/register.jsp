@@ -31,15 +31,7 @@
                 if (username.length == 0 || password.length == 0 || retype.length == 0
                         || firstname.length == 0 || lastname.length == 0
                         || birthdate.length == 0 || phone.length == 0) {
-                    msg = "Please input all fields \n"
-                            + "Username :" + username.length + "\n"
-                            + "Password :" + password.length + "\n"
-                            + "Re :" + retype.length + "\n"
-                            + "First :" + firstname.length + "\n"
-                            + "Last :" + lastname.length + "\n"
-                            + "Birth :" + birthdate.length + "\n"
-                            + "Phone :" + phone.length;
-                    +"\n"
+                    msg = "Please input all fields";
                 } else {
                     if (password.length < 5) {
                         msg += "Password length >= 5";
@@ -71,31 +63,38 @@
                         <form action="register" name="myForm" onsubmit="return validateRegister()" method="POST">
                             <div class="form-group">
                                 <label>Username</label>
-                                <input type="text" name="username" class="form-control" placeholder="Enter Username">
+                                <input type="text" name="username" class="form-control" placeholder="Enter Username"
+                                       required/>
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
-                                <input type="password" name="password" id="password"  class="form-control" placeholder="Enter Password">
+                                <input type="password" name="password" id="password"  class="form-control" placeholder="Enter Password"
+                                       required/>
                             </div>
                             <div class="form-group">
                                 <label>Confirm</label>
-                                <input type="password" name="retype" id="password" class="form-control" placeholder="Enter Password">
+                                <input type="password" name="retype" id="password" class="form-control" placeholder="Enter Password"
+                                       required/>
                             </div>
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input type="text"  name="firstname" class="form-control" id="firstname" placeholder="Enter Firstname">
+                                <input type="text"  name="firstname" class="form-control" id="firstname" placeholder="Enter Firstname"
+                                       required/>
                             </div>
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text"  name="lastname" class="form-control" id="lastname" placeholder="Enter Lastname">
+                                <input type="text"  name="lastname" class="form-control" id="lastname" placeholder="Enter Lastname"
+                                       required/>
                             </div>
                             <div class="form-group">
                                 <label>Birthdate</label>
-                                <input type="date" name="birthdate" class="form-control" id="birthdate" placeholder="Enter Birthdate">
+                                <input type="date" name="birthdate" class="form-control" id="birthdate" placeholder="Enter Birthdate"
+                                       required/>
                             </div>
                             <div class="form-group">
                                 <label>Phone</label>
-                                <input type="text" name="phone" class="form-control" id="birthdate" placeholder="Enter Phone">
+                                <input type="number" name="phone" class="form-control" id="birthdate" placeholder="Enter Phone"
+                                       required/>
                             </div>
                             <div class="col-md-12 text-center mb-3">
                                 <!--<button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Register</button>-->

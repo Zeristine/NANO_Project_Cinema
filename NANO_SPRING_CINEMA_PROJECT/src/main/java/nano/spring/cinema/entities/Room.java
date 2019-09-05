@@ -19,13 +19,33 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Room")
-public class Room implements Serializable{
-    
+public class Room implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
-    
+
     @Column(name = "isAvailable")
     private boolean isAvailable;
+
+    public Room() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public boolean isIsAvailable() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+
 }

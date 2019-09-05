@@ -16,6 +16,7 @@
         <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="resources/js/login-register.js"></script>
     </head>
     <body>
         <div class="container">
@@ -28,20 +29,20 @@
                                 <h1>Register new Account</h1>
                             </div>
                         </div>
-                        <form action="login" name="myForm" onsubmit="return validateRegister()" method="POST">
-                            <div class="form-group">
-                                <label>Username</label>
-                                <input type="text" name="username" class="form-control" placeholder="Enter Username">
-                            </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" name="password" id="password"  class="form-control" placeholder="Enter Password">
-                            </div>                                                        
-                            <div class="col-md-12 text-center mb-3">
-                                <!--<button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Register</button>-->
-                                <input type="submit" class="btn btn-block mybtn btn-primary tx-tfm" value="Register" />
-                            </div>          
-                        </form>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" name="username" class="form-control" placeholder="Enter Username"
+                                   required/>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" id="password"  class="form-control" placeholder="Enter Password"
+                                   required/>
+                        </div>                                                        
+                        <div class="col-md-12 text-center mb-3">                                
+                            <input type="submit" class="btn btn-block mybtn btn-primary tx-tfm" value="Register" 
+                                   onclick="login()"/>
+                        </div>          
                     </div>
                 </div>
                 <div class="col" style="width: 10%"></div>

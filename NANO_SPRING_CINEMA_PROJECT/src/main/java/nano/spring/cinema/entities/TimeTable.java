@@ -42,7 +42,48 @@ public class TimeTable implements Serializable {
     @Column(name = "endTime")
     @Temporal(TemporalType.TIME)
     private Date endTime;
-    
-    
+
+    public TimeTable() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getStartWeekDay() {
+        return startWeekDay;
+    }
+
+    public void setStartWeekDay(int startWeekDay) {
+        this.startWeekDay = startWeekDay;
+    }
+
+    public int getEndWeekDay() {
+        return endWeekDay;
+    }
+
+    public void setEndWeekDay(int endWeekDay) {
+        this.endWeekDay = endWeekDay;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
 
 }
