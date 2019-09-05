@@ -45,12 +45,15 @@ public class Account implements Serializable {
     private String lastname;
 
     @Column(name = "birthdate")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date birthdate;
 
     @Column(name = "phone", length = 15)
     private String phone;
 
+    @Column(name = "avatar")
+    private String avatar;
+    
     @OneToMany(mappedBy = "account")
     private Set<OrderFilm> orders;
 
@@ -60,6 +63,16 @@ public class Account implements Serializable {
     public Account() {
         this.orders = new HashSet<>();
         this.points = new HashSet<>();
+    }
+
+    public Account(String username, String password, String firstname, String lastname, Date birthdate, String phone, String avatar) {
+        this.username = username;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.birthdate = birthdate;
+        this.phone = phone;
+        this.avatar = avatar;
     }
 
     public long getId() {
@@ -116,6 +129,14 @@ public class Account implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public Set<OrderFilm> getOrders() {

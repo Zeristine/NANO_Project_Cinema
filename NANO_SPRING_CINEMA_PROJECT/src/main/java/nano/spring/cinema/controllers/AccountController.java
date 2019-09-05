@@ -91,11 +91,10 @@ public class AccountController {
     }
     
     @RequestMapping(value = "/account-profile-{id}", method = RequestMethod.GET)
-    public String getProfile(
-            ModelMap model,
-            @PathVariable(value = "id") long id
-    ) {
-        model.addAttribute("account", accountRepo.findOne(id));
+    public String getProfile(ModelMap model, @PathVariable(value = "id") long id) {
+        Account account = accountRepo.findOne(id);
+        model.addAttribute("account", account);
+        LOG.log(Level.INFO, "user name: " + account.getUsername());
         return "account-profile";
     }
 }

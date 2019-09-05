@@ -31,7 +31,7 @@ public class Category implements Serializable {
 
     public Category() {
     }
-
+    
     public long getId() {
         return id;
     }

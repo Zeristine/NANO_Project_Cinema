@@ -7,8 +7,11 @@ package nano.spring.cinema.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
+import nano.spring.cinema.entities.Account;
 import nano.spring.cinema.entities.Category;
 import nano.spring.cinema.entities.Company;
 import nano.spring.cinema.entities.Film;
@@ -20,6 +23,7 @@ import nano.spring.cinema.repositories.CompanyRepository;
 import nano.spring.cinema.repositories.FilmRepository;
 import nano.spring.cinema.repositories.OrderRepository;
 import nano.spring.cinema.repositories.TimeTableRepository;
+import nano.spring.cinema.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +53,9 @@ public class InitialController {
     public String toHomePage() {
         if (filmRepository.count() == 0) {
             createData();
+        }
+        if (accountRepository.count() == 0) {
+            initAccounts();
         }
         return "home";
     }
@@ -104,5 +111,13 @@ public class InitialController {
         Category c = new Category();
         c.setName(categoryname);
         f.getCategories().add(categoryRepository.save(c));
+    }
+    
+    private void initAccounts() {
+        List<Account> accounts = new ArrayList<>();
+        accounts.add(new Account("haanh", "123456", "Ha Anh", "Nguyen", 
+                        DateUtils.getDateInstance(1, 7, 1997), 
+                        "0123456789", "https://i.pinimg.com/originals/30/88/e1/3088e1abbefe13a1754bd56deafcde2d.jpg"));
+        accountRepository.save(accounts);
     }
 }

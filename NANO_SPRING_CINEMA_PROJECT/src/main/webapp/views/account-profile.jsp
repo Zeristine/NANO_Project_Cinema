@@ -49,6 +49,10 @@
         </div>        
         <div>
             
+        <h1>My Profile</h1>
+        <div>
+            <img src="${account.avatar}" style="width: 100px; height: 100px;"/>
+            ${account.firstname} ${account.lastname} 
         </div>
     </body>
 </html>
