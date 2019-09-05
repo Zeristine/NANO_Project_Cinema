@@ -25,24 +25,24 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class AccountController {
-
+    
     @Autowired
     private AccountRepository accountRepo;
-
+    
     private static final Logger LOG = Logger.getLogger(AccountController.class.getName());
-
+    
     @RequestMapping(value = "/form-register", method = RequestMethod.GET)
     public String registerPage() {
         return "register";
     }
-
+    
     @RequestMapping(value = "/form-login", method = RequestMethod.GET)
     public String loginPage() {
         return "login";
     }
-
+    
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView register(            
+    public ModelAndView register(
             @RequestParam(required = false) String username,
             @RequestParam(required = false) String password,
             @RequestParam(required = false) String firstname,
@@ -74,7 +74,7 @@ public class AccountController {
         }
         return m;
     }
-
+    
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public @ResponseBody
     String login(
@@ -88,5 +88,13 @@ public class AccountController {
             return logged.getFirstname() + " " + logged.getLastname() + "-" + logged.getId();
         }
     }
-
+    
+    @RequestMapping(value = "/account-profile", method = RequestMethod.POST)
+    public String getProfile(
+            ModelMap model,
+            @RequestParam(value = "id") long id
+    ) {
+        model.addAttribute("account", accountRepo.findOne(id));
+        return "account-profile";
+    }
 }

@@ -34,26 +34,44 @@ function logout() {
     }
 }
 
-function getTicketForm(button){
+function getTicketForm(button) {
     $("button").removeClass("active");
     $(button).addClass("active");
-//    $.ajax({
-//        type: 'POST',
-//        url: "form-order",
-//        success: function (a) {
-//            
-//        }
-//    });
+    $.ajax({
+        type: 'POST',
+        url: "form-order",
+        success: function (a) {
+            $("#main-content").html(a);
+        }
+    });
 }
 
-function getTicketPriceList(button){
+function getTicketPriceList(button) {
     $("button").removeClass("active");
     $(button).addClass("active");
-//    $.ajax({
-//        type: 'POST',
-//        url: "form-order",
-//        success: function (a) {
-//            
-//        }
-//    });
+    $.ajax({
+        type: 'POST',
+        url: "ticket-price",
+        success: function (a) {
+            $("#main-content").html(a);
+        }
+    });
+}
+
+function showProfile(button) {
+    $("button").removeClass("active");
+    $(button).addClass("active");
+    var id = window.localStorage.getItem("id");
+    $.ajax({
+        type: 'POST',
+        url: "account-profile",
+        data: {id: id},
+        success: function (a) {
+            $("#main-content").html(a);
+        }
+    });
+}
+
+function reload() {
+    window.location.reload();
 }

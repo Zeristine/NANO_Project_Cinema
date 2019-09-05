@@ -29,7 +29,7 @@
                 margin-bottom: 10px;
                 background-color: black;
             }
-            .header button{
+            .header .right button{
                 float: right;
                 width: 200px;
                 height: 100%;
@@ -37,9 +37,24 @@
                 margin-right: 5px;
                 border-radius: 10px 10px;
                 font-size: 20px;
-            }
-            .logged{
+            }            
+            .header .left button{
+                float: left;
                 width: 100%;
+                height: 100%;
+                margin-left: 5px;
+                margin-right: 5px;
+                border-radius: 10px 10px;
+                font-size: 20px;
+            }
+            .left{
+                float: left;
+                width: 20%;
+                height: 100%;
+            }
+            .right{
+                float: left;
+                width: 79%;
                 height: 100%;
                 display: none;
             }
@@ -56,7 +71,10 @@
     </head>
     <body>
         <div class="header" >
-            <div class="logged appear" name="not-logged">
+            <div class="left" >
+                <button onclick="reload()" >NANO Spring Cinema</button>
+            </div>
+            <div class="right" name="not-logged">
                 <a href="form-register" >
                     <button>Register</button>
                 </a>
@@ -65,11 +83,11 @@
                 </a>
                 <button onclick="">Ticket Price</button>
             </div>
-            <div class="logged" name="logged">
+            <div class="right" name="logged">
                 <button onclick="logout()" >Log out</button>           
                 <button onclick="getTicketForm(this)">Book Ticket</button>                
                 <button onclick="getTicketPriceList(this)">Ticket Price</button>
-                <button name="logged" onclick="showProfile()"></button>
+                <button name="logged" onclick="showProfile(this)"></button>
             </div>
         </div>        
         <div id="main-content" ></div>        
