@@ -29,7 +29,7 @@
                     <c:forEach items="${orders}" var="order">
                         <tr>
                             <td>
-                                ${order.showTime.Film.name}
+                                ${order.showTime.film.name}
                             </td>
                             <td>
                                 ${order.orderDate}
@@ -38,7 +38,19 @@
                                 ${order.totalPrice}
                             </td>
                             <td>
-                                ${order.status}
+                                <c:choose>
+                                    <c:when test="${order.status eq -1}">
+                                        <p style="color: red;">Canceled</p>
+                                    </c:when>
+                                    <c:when test="${order.status eq 0 or empty order.status}">
+                                        <form action="cancel-order" method="POST">
+                                            <input type="hidden" name="id" value="${order.id}" />
+                                            <input type="hidden" name="accountId" value="${account.id}" />
+                                            <input type="submit" value="Cancel Order" />
+                                        </form>
+                                    </c:when>
+                                    <c:when test="${order.status eq 1}">Received</c:when>
+                                </c:choose>
                             </td>
                         </tr>
                     </c:forEach>

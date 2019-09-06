@@ -54,7 +54,7 @@
         </div>
         <div>
             <a href="form-change-password-${account.id}">Change password</a>
-            <a href="form-udpate-profile-${account.id}">Update profile</a>
+            <a href="form-update-profile-${account.id}">Update profile</a>
             <form action="form-manage-order" method="POST">
                 <input type="hidden" name="accountId" value="${account.id}" />
                 <input type="submit" value="Manage Orders" />

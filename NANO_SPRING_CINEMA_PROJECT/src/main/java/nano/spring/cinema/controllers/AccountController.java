@@ -14,6 +14,7 @@ import nano.spring.cinema.entities.OrderFilm;
 import nano.spring.cinema.repositories.AccountRepository;
 import nano.spring.cinema.repositories.OrderFilmRepository;
 import nano.spring.cinema.repositories.PointRepository;
+import nano.spring.cinema.utils.DBConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -188,9 +189,26 @@ public class AccountController {
     @RequestMapping(value = "/form-manage-order", method = RequestMethod.POST)
     public String getFormOrder(@RequestParam("accountId") Long accountId, 
                                ModelMap model){
+        System.out.println("ACCOUNT ID " + accountId);
         List<OrderFilm> orders = orderFilmRepo.findByAccountId(accountId);
+        Account account = accountRepo.findOne(accountId);
         model.addAttribute("orders", orders);
+        model.addAttribute("account", account);
         return "manage-order";
     }
-      
+    
+    @RequestMapping(value = "/cancel-order", method = RequestMethod.POST)
+    public String cancelOrder(@RequestParam("id") Long id, 
+                              @RequestParam("accountId") Long accountId,
+                              ModelMap model){
+        System.out.println("ACCOUNT ID " + accountId);
+        OrderFilm order = orderFilmRepo.findOne(id);
+        try {    
+            order.setStatus(DBConstants.ORDERFILM_STATUS_CANCELED);
+            orderFilmRepo.save(order);
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, e.getMessage());
+        }
+        return "forward:/form-manage-order";
+    }
 }
