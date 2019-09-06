@@ -38,7 +38,10 @@ public class OrderFilm implements Serializable {
     private Date orderDate;
 
     @Column(name = "status")
-    private String status;
+    private Integer status;
+    
+    @Column(name = "totalPrice")
+    private Double totalPrice;
 
     @ManyToOne
     @JoinColumn(name = "showtimeId")
@@ -70,12 +73,20 @@ public class OrderFilm implements Serializable {
         this.orderDate = orderDate;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public ShowTime getShowTime() {
