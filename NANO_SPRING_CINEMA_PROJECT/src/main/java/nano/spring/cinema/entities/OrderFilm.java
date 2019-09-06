@@ -52,7 +52,7 @@ public class OrderFilm implements Serializable {
     @JoinColumn(name = "accountId")
     private Account account;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     private Set<Ticket> tickets;
 
     public OrderFilm() {

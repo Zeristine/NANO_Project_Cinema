@@ -7,10 +7,13 @@ package nano.spring.cinema.controllers;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import nano.spring.cinema.entities.Account;
 import nano.spring.cinema.entities.OrderFilm;
+import nano.spring.cinema.entities.Point;
+import nano.spring.cinema.entities.Ticket;
 import nano.spring.cinema.repositories.AccountRepository;
 import nano.spring.cinema.repositories.OrderFilmRepository;
 import nano.spring.cinema.repositories.PointRepository;
@@ -31,42 +34,42 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class AccountController {
-    
+
     @Autowired
     private AccountRepository accountRepo;
-    
+
     @Autowired
     private PointRepository pointRepo;
-    
+
     @Autowired
     private OrderFilmRepository orderFilmRepo;
-    
+
     private static final Logger LOG = Logger.getLogger(AccountController.class.getName());
-    
+
     @RequestMapping(value = "/form-register", method = RequestMethod.GET)
     public String registerPage() {
         return "register";
     }
-    
+
     @RequestMapping(value = "/form-login", method = RequestMethod.GET)
     public String loginPage() {
         return "login";
     }
-    
+
     @RequestMapping(value = "/form-change-password-{id}", method = RequestMethod.GET)
     public String changePasswordPage(@PathVariable("id") Long id, ModelMap model) {
         Account account = accountRepo.findOne(id);
         model.addAttribute("account", account);
         return "change-password";
     }
-    
+
     @RequestMapping(value = "/form-update-profile-{id}", method = RequestMethod.GET)
     public String updateProfilePage(@PathVariable("id") Long id, ModelMap model) {
         Account account = accountRepo.findOne(id);
         model.addAttribute("account", account);
         return "update-profile";
     }
-    
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView register(
             @RequestParam(required = false) String username,
@@ -100,7 +103,7 @@ public class AccountController {
         }
         return m;
     }
-    
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public @ResponseBody
     String login(
@@ -114,7 +117,7 @@ public class AccountController {
             return logged.getFirstname() + " " + logged.getLastname() + "-" + logged.getId();
         }
     }
-    
+
     @RequestMapping(value = "/account-profile-{id}", method = RequestMethod.GET)
     public String getProfile(ModelMap model, @PathVariable(value = "id") long id) {
         Account account = accountRepo.findOne(id);
@@ -128,14 +131,14 @@ public class AccountController {
         LOG.log(Level.INFO, "Total point: " + point);
         return "account-profile";
     }
-    
+
     @RequestMapping(value = "change-password", method = RequestMethod.POST)
     public String changePassword(ModelMap model,
-                                @RequestParam(value = "id") long id,
-                                @RequestParam(value = "username") String username,
-                                @RequestParam(value = "oldPassword") String oldPassword,
-                                @RequestParam(value = "newPassword") String newPassword,
-                                @RequestParam(value = "retype") String retype) {
+            @RequestParam(value = "id") long id,
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "oldPassword") String oldPassword,
+            @RequestParam(value = "newPassword") String newPassword,
+            @RequestParam(value = "retype") String retype) {
         Account account = accountRepo.findByUsernameAndPassword(username, oldPassword);
         String msg = null;
         if (account == null) {
@@ -157,7 +160,7 @@ public class AccountController {
         model.addAttribute("account", account);
         return "change-password";
     }
-    
+
     @RequestMapping(value = "/update-profile", method = RequestMethod.POST)
     public String updateProfile(
             @RequestParam Long id,
@@ -185,10 +188,10 @@ public class AccountController {
         m.addAttribute("account", acc);
         return "update-profile";
     }
-    
+
     @RequestMapping(value = "/form-manage-order", method = RequestMethod.POST)
-    public String getFormOrder(@RequestParam("accountId") Long accountId, 
-                               ModelMap model){
+    public String getFormOrder(@RequestParam("accountId") Long accountId,
+            ModelMap model) {
         System.out.println("ACCOUNT ID " + accountId);
         List<OrderFilm> orders = orderFilmRepo.findByAccountId(accountId);
         Account account = accountRepo.findOne(accountId);
@@ -196,14 +199,20 @@ public class AccountController {
         model.addAttribute("account", account);
         return "manage-order";
     }
-    
+
     @RequestMapping(value = "/cancel-order", method = RequestMethod.POST)
-    public String cancelOrder(@RequestParam("id") Long id, 
-                              @RequestParam("accountId") Long accountId,
-                              ModelMap model){
+    public String cancelOrder(@RequestParam("id") Long id,
+            @RequestParam("accountId") Long accountId,
+            ModelMap model) {
         System.out.println("ACCOUNT ID " + accountId);
         OrderFilm order = orderFilmRepo.findOne(id);
-        try {    
+        Account account = accountRepo.findOne(accountId);
+        try {
+            Set<Ticket> tickets = order.getTickets();
+            if (tickets != null && !tickets.isEmpty()) {
+                Point p = new Point(-DBConstants.POINT_PER_TICKET * tickets.size(), account);
+                pointRepo.save(p);
+            }
             order.setStatus(DBConstants.ORDERFILM_STATUS_CANCELED);
             orderFilmRepo.save(order);
         } catch (Exception e) {

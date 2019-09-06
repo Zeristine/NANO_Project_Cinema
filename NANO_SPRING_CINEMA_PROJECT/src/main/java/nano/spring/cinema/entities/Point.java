@@ -42,6 +42,11 @@ public class Point implements Serializable {
     public Point() {
     }
 
+    public Point(int numberOfPoint, Account account) {
+        this.numberOfPoint = numberOfPoint;
+        this.account = account;
+    }
+
     public long getId() {
         return id;
     }

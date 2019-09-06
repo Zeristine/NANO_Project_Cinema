@@ -15,4 +15,8 @@ public class DBConstants {
     public static final int ORDERFILM_STATUS_CANCELED = -1;
     public static final int ORDERFILM_STATUS_BOOKED = 0;
     public static final int ORDERFILM_STATUS_RECEIVED = 1;
+    
+    //POINT
+    public static final int POINT_PER_TICKET = 10;
+    
 }
