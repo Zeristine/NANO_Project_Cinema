@@ -6,7 +6,9 @@
 package nano.spring.cinema.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,12 +47,12 @@ public class ShowTime implements Serializable {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "showDate")
-    private Date showDate;        
+    private Date showDate;
 
     @Column(name = "ticketprice")
     private double ticketPrice;
 
-    @OneToMany(mappedBy = "showTime", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "showTime", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<OrderFilm> orders;
 
     public ShowTime() {
@@ -104,4 +106,21 @@ public class ShowTime implements Serializable {
         this.orders = orders;
     }
 
+    public int getTotalBookedTicket() {
+        int count = 0;
+        for (OrderFilm order : orders) {
+            count += order.getTickets().size();
+        }
+        return count;
+    }
+
+    public List<String> getBookedSeats(){
+        List<String> list = new ArrayList<>();
+        for (OrderFilm order : orders) {
+            for (Ticket ticket : order.getTickets()) {
+                list.add(ticket.getPosition());
+            }
+        }
+        return list;
+    }
 }

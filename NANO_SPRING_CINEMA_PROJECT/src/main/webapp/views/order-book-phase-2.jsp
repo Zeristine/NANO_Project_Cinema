@@ -4,67 +4,193 @@
     Author     : admin
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <style>
+            table{
+                width: 100%;
+            }
+            table button{
+                width: 100%;
+            }
+            table select{
+                width: 100%;
+            }
+            .booked{
+                background-color: red;
+                color: white;
+            }
+            .selected{
+                background-color: green;
+                color: white;
+            }
+        </style>
     </head>
     <body>
-        <h1>Book a Room</h1>
+
         <table border="0">            
             <tbody>
                 <tr>
-                    <th colspan="2" >Film</th>
-                    <th colspan="2" >Showing Date</th>
-                    <th colspan="2" >Showing Time</th>
+                    <th colspan="3" >
+                        <h2>Choose a Seat in Room ${showTime.room.id} on ${showTime.showDate} to watch ${showTime.film.name}</h2>
+                    </th>
                 </tr>
                 <tr>
-<!--                    <td colspan="2" >
-                        <select name="film" onchange="openOrCloseShowDateSelect(this)" >
-                            <option value="0" >Select a film</option>
-                            <c:forEach var="f" items="${films}" >
-                                <option value="1" >${f.name}</option>
+                    <th>Choose Amount</th>
+                    <td>
+                        <select name="amount" onchange="removeSeatDisable(this)" >
+                            <option>Select number of seats</option>
+                            <c:forEach begin="0" end="${24 - showTime.totalBookedTicket}" varStatus="counter" >
+                                <option value="${counter.count}" >${counter.count}</option>
                             </c:forEach>
                         </select>
                     </td>
-                    <td colspan="2" >
-                        <select name="date" disabled onchange="openOrCloseTimeDateSelect(this)" >
-                            <option value="0" >Select the showing date</option>
-                            <option value="1">2019-09-10</option>
-                            <option value="2">2019-09-11</option>
-                            <option value="3">2019-09-12</option>
-                            <option value="4">2019-09-13</option>
-                            <option value="5">2019-09-14</option>
-                        </select>
-                    </td>
-                    <td colspan="2" >
-                        <select name="time" disabled onclick="openOrCloseChooseSeat(this)" >
-                            <option value="0" >Select the show time</option>
-                            <c:forEach var="tt" items="${timetables}" >
-                                <option value="${tt.id}" >${tt.startTime}-${tt.endTime}</option>
-                            </c:forEach>
-                        </select>
-                    </td>-->
+                    <th>Ticket(s)</th>
+                </tr>                
+            </tbody>
+        </table>
+        <table border="0" name="seats" >
+            <thead>
+                <tr>
+                    <th colspan="5" style="background-color: black; color: white; height: 150px;" >Screen</th>                        
                 </tr>
                 <tr>
-                    <td colspan="3" >
+                    <th colspan="5" style="height: 25px;" ></th>                        
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <c:forEach begin="0" end="4" varStatus="counter" >
+                        <td>
+                            <button value="A-${counter.count}" 
+                                    <c:forEach var="pos" items="${showTime.bookedSeats}" >
+                                        <c:forTokens var="val" items="${pos}" delims="-" varStatus="mcounter" >
+                                            <c:if test="${mcounter.count == 1}" >
+                                                <c:set var="row" value="${val}" />
+                                            </c:if>
+                                            <c:if test="${mcounter.count == 2}" >
+                                                <c:if test="${val == counter.count && row eq 'A'}" >
+                                                    disabled class="booked"
+                                                </c:if>
+                                            </c:if>
+                                        </c:forTokens>                                        
+                                    </c:forEach> onclick="select(this)"
+                                    >A${counter.count}</button>
+                        </td>
+                    </c:forEach>                                                                
+                </tr>                    
+                <tr>
+                    <c:forEach begin="0" end="4" varStatus="counter" >
+                        <td>
+                            <button value="B-${counter.count}" 
+                                    <c:forEach var="pos" items="${showTime.bookedSeats}" >
+                                        <c:forTokens var="num" items="${pos}" delims="-" varStatus="mcounter" >
+                                            <c:if test="${mcounter.count == 1}" >
+                                                <c:set var="row" value="${val}" />
+                                            </c:if>
+                                            <c:if test="${mcounter.count == 2}" >
+                                                <c:if test="${val == counter.count && row eq 'B'}" >
+                                                    disabled class="booked"
+                                                </c:if>
+                                            </c:if>
+                                        </c:forTokens>                                        
+                                    </c:forEach> onclick="select(this)"
+                                    >B${counter.count}</button>
+                        </td>
+                    </c:forEach>                                                                
+                </tr>                    
+                <tr>
+                    <c:forEach begin="0" end="4" varStatus="counter" >
+                        <td>
+                            <button value="C-${counter.count}" 
+                                    <c:forEach var="pos" items="${showTime.bookedSeats}" >
+                                        <c:forTokens var="num" items="${pos}" delims="-" varStatus="mcounter" >
+                                            <c:if test="${mcounter.count == 1}" >
+                                                <c:set var="row" value="${val}" />
+                                            </c:if>
+                                            <c:if test="${mcounter.count == 2}" >
+                                                <c:if test="${val == counter.count && row eq 'C'}" >
+                                                    disabled class="booked"
+                                                </c:if>
+                                            </c:if>
+                                        </c:forTokens>                                        
+                                    </c:forEach> onclick="select(this)"
+                                    >C${counter.count}</button>
+                        </td>
+                    </c:forEach>                                                                
+                </tr>                    
+                <tr>
+                    <c:forEach begin="0" end="4" varStatus="counter" >
+                        <td>
+                            <button value="D-${counter.count}" 
+                                    <c:forEach var="pos" items="${showTime.bookedSeats}" >
+                                        <c:forTokens var="num" items="${pos}" delims="-" varStatus="mcounter" >
+                                            <c:if test="${mcounter.count == 1}" >
+                                                <c:set var="row" value="${val}" />
+                                            </c:if>
+                                            <c:if test="${mcounter.count == 2}" >
+                                                <c:if test="${val == counter.count && row eq 'D'}" >
+                                                    disabled class="booked"
+                                                </c:if>
+                                            </c:if>
+                                        </c:forTokens>                                        
+                                    </c:forEach> onclick="select(this)"
+                                    >D${counter.count}</button>
+                        </td>
+                    </c:forEach>                                                                
+                </tr>                    
+                <tr>
+                    <c:forEach begin="0" end="4" varStatus="counter" >
+                        <td>
+                            <button value="E-${counter.count}" 
+                                    <c:forEach var="pos" items="${showTime.bookedSeats}" >
+                                        <c:forTokens var="num" items="${pos}" delims="-" varStatus="mcounter" >
+                                            <c:if test="${mcounter.count == 1}" >
+                                                <c:set var="row" value="${val}" />
+                                            </c:if>
+                                            <c:if test="${mcounter.count == 2}" >
+                                                <c:if test="${val == counter.count && row eq 'E'}" >
+                                                    disabled class="booked"
+                                                </c:if>
+                                            </c:if>
+                                        </c:forTokens>                                        
+                                    </c:forEach> onclick="select(this)"
+                                    >E${counter.count}</button>
+                        </td>
+                    </c:forEach>                                                                
+                </tr>                                    
+            </tbody>
+        </table>
+        <table>
+            <tbody> 
+                <tr>
+                    <td><button class="booked" disabled >Booked</button></td>
+                    <td><button class="selected" disabled>Selected</button></td>
+                    <td><button class="" disabled>Available</button></td>
+                </tr>
+                <tr>
+                    <td>
                         <button onclick="backToPrevious()" >
                             Back
                         </button>
                     </td>
-                    <td colspan="3" >
+                    <td>
                         <button onclick="clearAllOrder()" >
                             Cancel
                         </button>
                     </td>
-                    <td colspan="3" >
+                    <td>
                         <button onclick="toConfirmPhase()" disabled name="button-seat">
                             Confirm
                         </button>
                     </td>
                 </tr>
             </tbody>
+        </table>
     </body>
 </html>

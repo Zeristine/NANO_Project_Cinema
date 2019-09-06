@@ -36,6 +36,9 @@ public class Ticket implements Serializable {
 
     @Column(name = "pointAward")
     private int pointAward;
+    
+    @Column(name="position")
+    private String position;
 
     @OneToMany(mappedBy = "ticket")
     private Set<Point> points;
@@ -86,6 +89,14 @@ public class Ticket implements Serializable {
 
     public void setOrder(OrderFilm order) {
         this.order = order;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
 }
