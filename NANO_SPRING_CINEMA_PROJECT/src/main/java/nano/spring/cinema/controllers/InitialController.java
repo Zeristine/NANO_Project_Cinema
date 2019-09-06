@@ -16,12 +16,16 @@ import nano.spring.cinema.entities.Category;
 import nano.spring.cinema.entities.Company;
 import nano.spring.cinema.entities.Film;
 import nano.spring.cinema.entities.FilmPersonRole;
+import nano.spring.cinema.entities.Room;
+import nano.spring.cinema.entities.ShowTime;
 import nano.spring.cinema.entities.TimeTable;
 import nano.spring.cinema.repositories.AccountRepository;
 import nano.spring.cinema.repositories.CategoryRepository;
 import nano.spring.cinema.repositories.CompanyRepository;
 import nano.spring.cinema.repositories.FilmRepository;
 import nano.spring.cinema.repositories.OrderRepository;
+import nano.spring.cinema.repositories.RoomRepository;
+import nano.spring.cinema.repositories.ShowTimeRepository;
 import nano.spring.cinema.repositories.TimeTableRepository;
 import nano.spring.cinema.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +47,13 @@ public class InitialController {
     @Autowired
     private CompanyRepository companyRepository;
     @Autowired
-    private FilmRepository filmRepository;
-    @Autowired
-    private OrderRepository orderRepository;
+    private FilmRepository filmRepository;    
     @Autowired
     private TimeTableRepository timeTableRepository;
+    @Autowired
+    private ShowTimeRepository showTimeRepository;
+    @Autowired
+    private RoomRepository roomRepository;
 
     @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
     public String toHomePage() {
@@ -61,7 +67,6 @@ public class InitialController {
     }
 
     private void createData() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         Film f = new Film();
         f.setName("The Avengers");
         f.setImage("https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX182_CR0,0,182,268_AL_.jpg");
@@ -76,10 +81,11 @@ public class InitialController {
         Company c = new Company();
         c.setName("Marvel Studio");
         f.setCompany(companyRepository.save(c));
-        addCategory("Action", f);
-        addCategory("Horror", f);
-        addCategory("Adventure", f);
-        addCategory("Comedy", f);
+        addCategory("Action");
+        addCategory("Horror");
+        addCategory("Adventure");
+        addCategory("Comedy");
+        f.getCategories().addAll(categoryRepository.findAll());
         filmRepository.save(f);
         Film f2 = new Film();
         f2.setName("The Avengers: End Game");
@@ -90,34 +96,73 @@ public class InitialController {
         f2.setVideo("https://www.youtube.com/watch?v=TcMBFSGVi1c");
         f2.setPersonrole(new HashSet<FilmPersonRole>());
         f2.setFromDate(new Date());
-        f2.setToDate(new Date());
-        f2 = filmRepository.save(f2);        
-        f2.setCompany(companyRepository.save(c));        
+        f2.setToDate(new Date());        
+        f2 = filmRepository.save(f2);
+        f2.getCategories().addAll(categoryRepository.findAll());
+        f2.setCompany(companyRepository.save(c));
         filmRepository.save(f2);
+        addTimeTable(2, 4, "6:00:00", "9:59:59", 100000);
+        addTimeTable(2, 4, "10:00:00", "11:59:59", 120000);
+        addTimeTable(2, 4, "12:00:00", "16:59:59", 150000);
+        addTimeTable(2, 4, "17:00:00", "19:59:59", 200000);
+        addTimeTable(2, 4, "20:00:00", "23:59:59", 180000);
+        addTimeTable(2, 4, "24:00:00", "5:59:59", 50000);
+        addTimeTable(5, 6, "6:00:00", "9:59:59", 50000);
+        addTimeTable(5, 6, "10:00:00", "11:59:59", 100000);
+        addTimeTable(5, 6, "12:00:00", "16:59:59", 120000);
+        addTimeTable(5, 6, "17:00:00", "19:59:59", 150000);
+        addTimeTable(5, 6, "20:00:00", "23:59:59", 120000);
+        addTimeTable(5, 6, "24:00:00", "5:59:59", 30000);
+        addTimeTable(7, 1, "6:00:00", "9:59:59", 120000);
+        addTimeTable(7, 1, "10:00:00", "11:59:59", 150000);
+        addTimeTable(7, 1, "12:00:00", "16:59:59", 180000);
+        addTimeTable(7, 1, "17:00:00", "19:59:59", 200000);
+        addTimeTable(7, 1, "20:00:00", "23:59:59", 180000);
+        addTimeTable(7, 1, "24:00:00", "5:59:59", 100000);
+        addShowTime(f);
+        addShowTime(f);
+        addShowTime(f2);
+        addShowTime(f2);
+        addShowTime(f2);
+    }
+
+    private void addCategory(String categoryname) {
+        Category c = new Category();
+        c.setName(categoryname);
+        categoryRepository.save(c);
+    }
+
+    private void addTimeTable(int start, int end, String startTime, String endTime, double price) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         try {
             TimeTable tt = new TimeTable();
-            tt.setStartWeekDay(2);
-            tt.setEndWeekDay(6);
-            tt.setStartTime(sdf.parse("24:00:00"));
-            tt.setEndTime(sdf.parse("23:59:59"));
-            tt.setPrice(100000);
+            tt.setStartWeekDay(start);
+            tt.setEndWeekDay(end);
+            tt.setStartTime(sdf.parse(startTime));
+            tt.setEndTime(sdf.parse(endTime));
+            tt.setPrice(price);
             timeTableRepository.save(tt);
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
 
-    private void addCategory(String categoryname, Film f) {
-        Category c = new Category();
-        c.setName(categoryname);
-        f.getCategories().add(categoryRepository.save(c));
+    private void addShowTime(Film f){
+        ShowTime st = new ShowTime();
+        Room r = new Room();
+        r.setIsAvailable(true);
+        st.setRoom(roomRepository.save(r));
+        st.setShowDate(new Date());
+        st.setTicketPrice(10000);
+        st.setFilm(f);        
+        showTimeRepository.save(st);
     }
     
     private void initAccounts() {
         List<Account> accounts = new ArrayList<>();
-        accounts.add(new Account("haanh", "123456", "Ha Anh", "Nguyen", 
-                        DateUtils.getDateInstance(1, 7, 1997), 
-                        "0123456789", "https://i.pinimg.com/originals/30/88/e1/3088e1abbefe13a1754bd56deafcde2d.jpg"));
+        accounts.add(new Account("haanh", "123456", "Ha Anh", "Nguyen",
+                DateUtils.getDateInstance(1, 7, 1997),
+                "0123456789", "https://i.pinimg.com/originals/30/88/e1/3088e1abbefe13a1754bd56deafcde2d.jpg"));
         accountRepository.save(accounts);
     }
 }

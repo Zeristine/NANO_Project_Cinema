@@ -26,33 +26,27 @@ $(document).ready(function () {
     }
 });
 
-function openOrCloseShowDateSelect(select) {
+function openOrCloseShowTimeSelect(select) {
     var value = $(select).val();
     if (value == 0) {
-        $("select[name=date]").prop("disabled", "disabled");
-        $("select[name=time]").prop("disabled", "disabled");
+        $("select[name=st]").prop("disabled", "disabled");
         $("button[name=button-seat]").prop("disabled", "disabled");
     } else {
-        $("select[name=date]").removeProp("disabled");
-        if ($("select[name=date]").val() != 0) {
-            $("select[name=time]").removeProp("disabled");
-            if ($("select[name=time]").val() != 0) {
-                $("button[name=button-seat]").removeProp("disabled");
+        $.ajax({
+            type: 'POST',
+            url: "form-order-date",
+            data: {id: value},
+            success: function (a) {
+                alert("success");
+                $("td[name=st]").html(a);
+                setTimeout(function () {
+                    $("select[name=st]").removeProp("disabled");
+                    if ($("select[name=st]").val() != 0) {
+                        $("button[name=button-seat]").removeProp("disabled");
+                    }
+                }, 2000);
             }
-        }
-    }
-}
-
-function openOrCloseTimeDateSelect(select) {
-    var value = $(select).val();
-    if (value == 0) {
-        $("select[name=time]").prop("disabled", "disabled");
-        $("button[name=button-seat]").prop("disabled", "disabled");
-    } else {
-        $("select[name=time]").removeProp("disabled");
-        if ($("select[name=time]").val() != 0) {
-            $("button[name=button-seat]").removeProp("disabled");
-        }
+        });
     }
 }
 
@@ -67,19 +61,19 @@ function openOrCloseChooseSeat(select) {
 
 function toRoomPhase() {
     var filmId = $("select[name=film]").val();
-    var dateId = $("select[name=date]").val();
-    var timeId = $("select[name=time]").val();
+    var stId = $("select[name=st]").val();
     window.localStorage.setItem("order", 1);
     window.localStorage.setItem("film", filmId);
-    window.localStorage.setItem("time", timeId);
-    window.localStorage.setItem("date", dateId);
+    window.localStorage.setItem("showtime", stId);
     getRoomPhase();
 }
 
 function getRoomPhase() {
+    var stId = $("select[name=st]").val();
     $.ajax({
         type: 'POST',
         url: "form-order-room",
+        data: {id: stId},
         success: function (a) {
             $("#main-content").html(a);
         }
@@ -99,7 +93,7 @@ function backToPrevious() {
     var phase = window.localStorage.getItem("order");
     if (phase == 1) {
         window.location.reload();
-    }else if (phase == 2){
+    } else if (phase == 2) {
         getRoomPhase();
     }
 }

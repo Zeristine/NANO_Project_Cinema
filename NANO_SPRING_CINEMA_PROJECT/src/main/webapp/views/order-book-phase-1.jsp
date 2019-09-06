@@ -15,6 +15,9 @@
             table{
                 width: 100%;
             }
+            table td{
+                width: 50%;
+            }
             table select{
                 width: 100%;
                 height: 75px;
@@ -29,45 +32,31 @@
         <table border="0">            
             <tbody>
                 <tr>
-                    <th colspan="2" >Film</th>
-                    <th colspan="2" >Showing Date</th>
-                    <th colspan="2" >Showing Time</th>
+                    <th>Film</th>
+                    <th>Showing Date</th>                    
                 </tr>
                 <tr>
-                    <td colspan="2" >
-                        <select name="film" onchange="openOrCloseShowDateSelect(this)" >
+                    <td>
+                        <select name="film" onchange="openOrCloseShowTimeSelect(this)" >
                             <option value="0" >Select a film</option>
                             <c:forEach var="f" items="${films}" >
-                                <option value="1" >${f.name}</option>
+                                <option value="${f.id}" >${f.name}</option>
                             </c:forEach>
                         </select>
                     </td>
-                    <td colspan="2" >
-                        <select name="date" disabled onchange="openOrCloseTimeDateSelect(this)" >
-                            <option value="0" >Select the showing date</option>
-                            <option value="1">2019-09-10</option>
-                            <option value="2">2019-09-11</option>
-                            <option value="3">2019-09-12</option>
-                            <option value="4">2019-09-13</option>
-                            <option value="5">2019-09-14</option>
+                    <td name="st">
+                        <select name="st" disabled onchange="openOrCloseChooseSeat(this)" >
+                            <option value="0" >Select the showing date</option>                            
                         </select>
-                    </td>
-                    <td colspan="2" >
-                        <select name="time" disabled onclick="openOrCloseChooseSeat(this)" >
-                            <option value="0" >Select the show time</option>
-                            <c:forEach var="tt" items="${timetables}" >
-                                <option value="${tt.id}" >${tt.startTime}-${tt.endTime}</option>
-                            </c:forEach>
-                        </select>
-                    </td>
+                    </td>                    
                 </tr>
                 <tr>
-                    <td colspan="3" >
+                    <td>
                         <button onclick="clearAllOrder()" >
                             Cancel
                         </button>
                     </td>
-                    <td colspan="3" >
+                    <td>
                         <button onclick="toRoomPhase()" disabled name="button-seat">
                             Choose Seat
                         </button>

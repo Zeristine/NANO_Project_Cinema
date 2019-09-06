@@ -22,13 +22,17 @@
             }
             .img-content{
                 text-align: center;
+                height: 300px;                
+            }
+            .img-content img{
+                height: 100%;
             }
             .description{
                 text-align: left;   
             }
             iframe{
                 width: 100%;                
-                height: 500px;
+                height: 800px;;
             }            
         </style>
     </head>

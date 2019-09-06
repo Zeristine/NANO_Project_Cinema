@@ -5,10 +5,8 @@
  */
 package nano.spring.cinema.repositories;
 
-import java.util.List;
-import nano.spring.cinema.entities.ShowTime;
+import nano.spring.cinema.entities.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,8 +14,6 @@ import org.springframework.stereotype.Repository;
  * @author admin
  */
 @Repository
-public interface ShowTimeRepository extends JpaRepository<ShowTime, Long> {
+public interface RoomRepository extends JpaRepository<Room, Long> {
 
-    @Query("Select st From ShowTime st Where st.film.id = ?1")
-    List<ShowTime> findByFilmId(long id);
 }

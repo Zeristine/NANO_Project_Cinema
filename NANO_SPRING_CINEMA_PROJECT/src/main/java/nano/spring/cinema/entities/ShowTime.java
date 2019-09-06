@@ -6,6 +6,7 @@
 package nano.spring.cinema.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,6 +19,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -40,9 +43,9 @@ public class ShowTime implements Serializable {
     @JoinColumn(name = "filmId")
     private Film film;
 
-    @ManyToOne
-    @JoinColumn(name = "timetableId")
-    private TimeTable timeTable;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "showDate")
+    private Date showDate;        
 
     @Column(name = "ticketprice")
     private double ticketPrice;
@@ -77,12 +80,12 @@ public class ShowTime implements Serializable {
         this.film = film;
     }
 
-    public TimeTable getTimeTable() {
-        return timeTable;
+    public Date getShowDate() {
+        return showDate;
     }
 
-    public void setTimeTable(TimeTable timeTable) {
-        this.timeTable = timeTable;
+    public void setShowDate(Date showDate) {
+        this.showDate = showDate;
     }
 
     public double getTicketPrice() {
