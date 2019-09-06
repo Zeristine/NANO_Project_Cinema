@@ -8,6 +8,7 @@ package nano.spring.cinema.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,7 +41,7 @@ public class OrderFilm implements Serializable {
 
     @Column(name = "status")
     private Integer status;
-    
+
     @Column(name = "totalPrice")
     private Double totalPrice;
 
@@ -52,7 +53,7 @@ public class OrderFilm implements Serializable {
     @JoinColumn(name = "accountId")
     private Account account;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Ticket> tickets;
 
     public OrderFilm() {

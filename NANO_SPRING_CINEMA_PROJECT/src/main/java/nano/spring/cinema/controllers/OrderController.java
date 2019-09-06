@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import nano.spring.cinema.entities.OrderFilm;
+import nano.spring.cinema.entities.ShowTime;
 import nano.spring.cinema.entities.Ticket;
 import nano.spring.cinema.entities.TimeTable;
 import nano.spring.cinema.repositories.FilmRepository;
@@ -33,7 +34,7 @@ public class OrderController {
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
-    private FilmRepository filmRepository;    
+    private FilmRepository filmRepository;
     @Autowired
     private ShowTimeRepository showTimeRepository;
 
@@ -42,17 +43,15 @@ public class OrderController {
         model.addAttribute("films", filmRepository.findAll());
         return "order-book-main";
     }
-    
+
     @RequestMapping(value = "/form-order-room", method = RequestMethod.POST)
     public String getFormOrderRoom(
             ModelMap model,
             @RequestParam(value = "id") long id
     ) {
-        OrderFilm o = new OrderFilm();
-        o.setOrderDate(Calendar.getInstance().getTime());
-        o.setShowTime(showTimeRepository.findOne(id));        
-        o.setTickets(new HashSet<Ticket>());
-        model.addAttribute("order", orderRepository.save(o));
+        ShowTime st = showTimeRepository.findOne(id);
+        model.addAttribute("showTime", st);
+        model.addAttribute("booked", st.getTotalBookedTicket());
         return "order-book-phase-2";
     }
 
@@ -72,10 +71,10 @@ public class OrderController {
     }
 
     @RequestMapping(value = "/order-tickets-save", method = RequestMethod.POST)
-    public String saveOrderTickets(){
+    public String saveOrderTickets() {
         return "";
     }
-    
+
     @RequestMapping(value = "/form-order-date", method = RequestMethod.POST)
     public String getShowDateOfFilm(
             ModelMap model,

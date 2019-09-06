@@ -40,7 +40,7 @@
                         <select name="film" onchange="openOrCloseShowTimeSelect(this)" >
                             <option value="0" >Select a film</option>
                             <c:forEach var="f" items="${films}" >
-                                <option value="${f.id}" >${f.name}</option>
+                                <option value="${f.id}"  >${f.name}</option>
                             </c:forEach>
                         </select>
                     </td>
