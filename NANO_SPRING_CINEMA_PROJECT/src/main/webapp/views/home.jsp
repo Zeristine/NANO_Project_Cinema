@@ -10,9 +10,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Spring Cinema</title>
-        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script type="text/javascript" src="resources/js/login-register.js"></script>
-        <script type="text/javascript" src="resources/js/home.js"></script>        
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>        
+        <script type="text/javascript" src="resources/js/login-register.js"></script>                
+        <script type="text/javascript" src="resources/js/home.js"></script>          
+        <script type="text/javascript" src="resources/js/main.js"></script>          
         <link rel="stylesheet" href="resources/css/main.css"/>
     </head>
     <body>        
@@ -26,10 +27,7 @@
                 </a>
                 <a href="form-login">
                     <button>Log in</button>
-                </a>
-                <a href="form-order">
-                    <button class="">Book Ticket</button>                    
-                </a>
+                </a>                
                 <a href="ticket-price">
                     <button class="">Ticket Price</button>                
                 </a>                

@@ -46,10 +46,7 @@
                 </a>
                 <a href="form-login">
                     <button>Log in</button>
-                </a>
-                <a href="form-order">
-                    <button class="">Book Ticket</button>                
-                </a>                
+                </a>                        
                 <a href="#">
                     <button class="active" >Ticket Price</button>                
                 </a>
@@ -70,29 +67,44 @@
         <div class="price-list-header">
             <b>Ticket Price</b>
         </div>        
-        <c:forEach var="p" items="${prices}" >
-            <div class="price-list-component">                
-                <c:choose>
-                    <c:when test="${p.startWeekDay == 1}" >Sun</c:when>
-                    <c:when test="${p.startWeekDay == 2}" >Mon</c:when>
-                    <c:when test="${p.startWeekDay == 3}" >Tue</c:when>
-                    <c:when test="${p.startWeekDay == 4}" >Wed</c:when>
-                    <c:when test="${p.startWeekDay == 5}" >Thu</c:when>
-                    <c:when test="${p.startWeekDay == 6}" >Fri</c:when>
-                    <c:when test="${p.startWeekDay == 7}" >Sat</c:when>
-                </c:choose> - 
-                <c:choose>
-                    <c:when test="${p.endWeekDay == 1}" >Sun</c:when>
-                    <c:when test="${p.endWeekDay == 2}" >Mon</c:when>
-                    <c:when test="${p.endWeekDay == 3}" >Tue</c:when>
-                    <c:when test="${p.endWeekDay == 4}" >Wed</c:when>
-                    <c:when test="${p.endWeekDay == 5}" >Thu</c:when>
-                    <c:when test="${p.endWeekDay == 6}" >Fri</c:when>
-                    <c:when test="${p.endWeekDay == 7}" >Sat</c:when>
-                </c:choose> : 
-                (${p.startTime}-${p.endTime})
-                <div class="price-left" >${p.price} VNĐ/ticket</div>
+        <c:forEach var="p" items="${prices.entrySet()}" >
+            <div class="price-list-component">    
+                <b>
+                    <c:forTokens var="time" items="${p.key}" delims="-" varStatus="counter">
+                        <c:choose>
+                            <c:when test="${counter.count == 1}" >
+                                From                            
+                            </c:when>
+                            <c:otherwise>
+                                To
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${time == '1'}" >Sun</c:when>
+                            <c:when test="${time == '2'}" >Mon</c:when>
+                            <c:when test="${time == '3'}" >Tue</c:when>
+                            <c:when test="${time == '4'}" >Wed</c:when>
+                            <c:when test="${time == '5'}" >Thu</c:when>
+                            <c:when test="${time == '6'}" >Fri</c:when>
+                            <c:when test="${time == '7'}" >Sat</c:when>
+                        </c:choose>
+                    </c:forTokens>         
+                </b>
                 <hr/>
+                <c:forEach var="val" items="${p.value}" >
+                    <c:forTokens var="price" items="${val}" delims="|" varStatus="counter">
+                        <c:choose>
+                            <c:when test="${counter.count == 1}" >
+                                ${price}
+                            </c:when>                        
+                            <c:otherwise>
+                                <div class="price-left" >${price} VNĐ/ticket</div>
+                                <br/>
+                            </c:otherwise>
+                        </c:choose>                                 
+                    </c:forTokens>          
+                    <hr/>
+                </c:forEach>                                
             </div>                               
         </c:forEach>                            
     </body>

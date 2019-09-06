@@ -1,3 +1,18 @@
+$(document).ready(function () {
+    if (window.localStorage.hasOwnProperty("id") &&
+            window.localStorage.hasOwnProperty("name")) {
+        var name = window.localStorage.getItem("name");
+        var id = window.localStorage.getItem("id");
+        $("button[name=logged]").text(name);
+        $("div[name=logged]")
+                .css({"display": "block"});
+        $("a[name=logged-link]").attr("href", "account-profile-" + id);
+    } else {
+        $("div[name=not-logged]")
+                .css({"display": "block"});
+    }
+});
+
 function validateRegister() {
     var username = $("input[name=username]").val().trim();
     var password = $("input[name=password").val().trim();
@@ -40,7 +55,7 @@ function login() {
             } else {
                 var pos = a.indexOf("-");
                 var name = a.substring(0, pos);
-                var id = a.substring(pos+1);                
+                var id = a.substring(pos + 1);
                 window.localStorage.setItem("id", id);
                 window.localStorage.setItem("name", name);
                 alert("Welcome, " + name);
@@ -61,6 +76,6 @@ function getName(id) {
     });
 }
 
-function backToHome(){
+function backToHome() {
     window.location.replace("home");
 }

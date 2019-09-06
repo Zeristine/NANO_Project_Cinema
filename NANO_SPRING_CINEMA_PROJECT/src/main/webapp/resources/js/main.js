@@ -1,14 +1,17 @@
-$(document).ready(function () {
+function logout() {
     if (window.localStorage.hasOwnProperty("id") &&
             window.localStorage.hasOwnProperty("name")) {
-        var name = window.localStorage.getItem("name");
-        var id = window.localStorage.getItem("id");
-        $("button[name=logged]").text(name);
-        $("div[name=logged]")
-                .css({"display": "block"});
-        $("a[name=logged-link]").attr("href", "account-profile-" + id);
-    } else {
-        $("div[name=not-logged]")
-                .css({"display": "block"});
+        if (window.localStorage.hasOwnProperty("order")) {
+            var confirm = confirm("You are having unfinished order. If you log out, eveything will be gone. Are you sure?");
+            if (confirm) {
+                window.localStorage.clear();
+            }
+        } else {
+            window.localStorage.clear();
+        }
     }
-});
+    if (!window.localStorage.hasOwnProperty("id") &&
+            !window.localStorage.hasOwnProperty("name")) {
+        window.location.replace("home");
+    }
+}

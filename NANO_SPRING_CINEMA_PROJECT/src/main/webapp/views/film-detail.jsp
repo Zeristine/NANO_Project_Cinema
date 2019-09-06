@@ -43,10 +43,7 @@
                 </a>
                 <a href="form-login">
                     <button>Log in</button>
-                </a>
-                <a href="form-order">
-                    <button class="">Book Ticket</button>                    
-                </a>
+                </a>                
                 <a href="ticket-price">
                     <button class="">Ticket Price</button>                
                 </a>                
