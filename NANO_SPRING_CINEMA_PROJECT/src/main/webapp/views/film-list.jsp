@@ -84,16 +84,26 @@
                     <img src="${f.image}"/>
                     <div name="title" >
                         <h3>${f.name}</h3>
-                    </div>
-                    <ul>
-                        <li>Category: </li>
-                        <li>Duration: ${f.duration}</li>
-                        <li>Start Date: ${f.fromDate}</li>
-                    </ul>
-                    <form action="film-detail" method="POST">
-                        <input type="hidden" name="id" value="${f.id}" />
-                        <input type="submit" value="View Detail" />
-                    </form>
+                        <ul>
+                            <li>Category:
+                                <c:forEach var="cg" items="${f.categories}" >
+                                    <a href="category-${cg.name}" >
+                                        <button>${cg.name}</button>
+                                    </a>
+                                </c:forEach>
+                            </li>
+                            <li>Duration: ${f.duration}</li>
+                            <li>Start Date: ${f.fromDate}</li>
+                        </ul>
+                        <c:if test="${current eq true}">
+                            <a href="book-ticket/${f.id}">
+                                <button>Book Ticket</button>
+                            </a>
+                        </c:if>                                                    
+                        <a href="film-detail-${f.id}-${f.name}" >
+                            <button>Show Detail</button>
+                        </a>                        
+                    </div>                    
                 </div>
             </c:forEach>
         </c:if>

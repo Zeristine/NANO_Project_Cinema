@@ -13,6 +13,7 @@
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script type="text/javascript" src="resources/js/login-register.js"></script>
         <script type="text/javascript" src="resources/js/main.js"></script>
+        <script type="text/javascript" src="resources/js/book-ticket.js"></script>        
         <link rel="stylesheet" href="resources/css/main.css"/>
     </head>
     <body>
@@ -48,7 +49,7 @@
             </div>
         </div>        
         <div id="main-content" >
-            
+            <jsp:include page="order-book-phase-1.jsp" flush="false" />
         </div>
     </body>
 </html>

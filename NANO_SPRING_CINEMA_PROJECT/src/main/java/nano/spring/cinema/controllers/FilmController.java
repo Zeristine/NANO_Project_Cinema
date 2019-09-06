@@ -38,8 +38,8 @@ public class FilmController {
     public ModelAndView getFilms(){
         ModelAndView model = new ModelAndView("film-list");
         Date currentDate = new Date(System.currentTimeMillis());
-        List<Film> films = filmRepository.findCurrentFilms(currentDate);
-        model.addObject("films", films);
+//        List<Film> films = filmRepository.findCurrentFilms(currentDate);
+        model.addObject("films", filmRepository.findAll());
         model.addObject("current", true);
         LOG.log(Level.INFO, "get current films");
         

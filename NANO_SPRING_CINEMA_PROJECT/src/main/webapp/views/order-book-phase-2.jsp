@@ -1,31 +1,18 @@
 <%-- 
-    Document   : order-book-phase-1
-    Created on : Sep 5, 2019, 3:42:17 PM
+    Document   : order-book-phase-2
+    Created on : Sep 6, 2019, 10:42:35 AM
     Author     : admin
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <style>
-            table{
-                width: 100%;
-            }
-            table select{
-                width: 100%;
-                height: 75px;
-                font-weight: bold;
-            }
-            table button{
-                width: 100%;
-            }            
-        </style>
     </head>
     <body>
+        <h1>Book a Room</h1>
         <table border="0">            
             <tbody>
                 <tr>
@@ -34,7 +21,7 @@
                     <th colspan="2" >Showing Time</th>
                 </tr>
                 <tr>
-                    <td colspan="2" >
+<!--                    <td colspan="2" >
                         <select name="film" onchange="openOrCloseShowDateSelect(this)" >
                             <option value="0" >Select a film</option>
                             <c:forEach var="f" items="${films}" >
@@ -59,21 +46,25 @@
                                 <option value="${tt.id}" >${tt.startTime}-${tt.endTime}</option>
                             </c:forEach>
                         </select>
-                    </td>
+                    </td>-->
                 </tr>
                 <tr>
+                    <td colspan="3" >
+                        <button onclick="backToPrevious()" >
+                            Back
+                        </button>
+                    </td>
                     <td colspan="3" >
                         <button onclick="clearAllOrder()" >
                             Cancel
                         </button>
                     </td>
                     <td colspan="3" >
-                        <button onclick="toRoomPhase()" disabled name="button-seat">
-                            Choose Seat
+                        <button onclick="toConfirmPhase()" disabled name="button-seat">
+                            Confirm
                         </button>
                     </td>
                 </tr>
             </tbody>
-        </table>
     </body>
 </html>
