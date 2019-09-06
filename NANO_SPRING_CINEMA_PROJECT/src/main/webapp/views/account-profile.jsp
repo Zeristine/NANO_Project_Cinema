@@ -54,6 +54,7 @@
         </div>
         <div>
             <a href="form-change-password-${account.id}">Change password</a>
+            <a href="form-udpate-profile-${account.id}">Update profile</a>
         </div>
     </body>
 </html>

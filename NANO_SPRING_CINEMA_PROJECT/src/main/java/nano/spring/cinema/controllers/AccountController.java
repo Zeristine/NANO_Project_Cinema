@@ -53,6 +53,13 @@ public class AccountController {
         return "change-password";
     }
     
+    @RequestMapping(value = "/form-update-profile-{id}", method = RequestMethod.GET)
+    public String updateProfilePage(@PathVariable("id") Long id, ModelMap model) {
+        Account account = accountRepo.findOne(id);
+        model.addAttribute("account", account);
+        return "update-profile";
+    }
+    
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView register(
             @RequestParam(required = false) String username,
@@ -142,5 +149,33 @@ public class AccountController {
         model.addAttribute("msg", msg);
         model.addAttribute("account", account);
         return "change-password";
+    }
+    
+    @RequestMapping(value = "/update-profile", method = RequestMethod.POST)
+    public String updateProfile(
+            @RequestParam Long id,
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String firstname,
+            @RequestParam(required = false) String lastname,
+            @RequestParam(required = false) String birthdate,
+            @RequestParam(required = false) String phone,
+            ModelMap m) {
+        String msg = null;
+        Account acc = accountRepo.findOne(id);
+        try {
+            Date birth = Date.valueOf(birthdate);
+            acc.setFirstname(firstname);
+            acc.setLastname(lastname);
+            acc.setBirthdate(birth);
+            acc.setPhone(phone);
+            accountRepo.save(acc);
+            msg = "Update profile successfully!";
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, e.getMessage());
+            msg = "Error occur!";
+        }
+        m.addAttribute("msg", msg);
+        m.addAttribute("account", acc);
+        return "update-profile";
     }
 }
