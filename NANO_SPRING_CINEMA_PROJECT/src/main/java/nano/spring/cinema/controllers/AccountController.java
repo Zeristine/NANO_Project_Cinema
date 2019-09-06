@@ -6,10 +6,13 @@
 package nano.spring.cinema.controllers;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import nano.spring.cinema.entities.Account;
+import nano.spring.cinema.entities.OrderFilm;
 import nano.spring.cinema.repositories.AccountRepository;
+import nano.spring.cinema.repositories.OrderFilmRepository;
 import nano.spring.cinema.repositories.PointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +36,9 @@ public class AccountController {
     
     @Autowired
     private PointRepository pointRepo;
+    
+    @Autowired
+    private OrderFilmRepository orderFilmRepo;
     
     private static final Logger LOG = Logger.getLogger(AccountController.class.getName());
     
@@ -178,4 +184,13 @@ public class AccountController {
         m.addAttribute("account", acc);
         return "update-profile";
     }
+    
+    @RequestMapping(value = "/form-manage-order", method = RequestMethod.POST)
+    public String getFormOrder(@RequestParam("accountId") Long accountId, 
+                               ModelMap model){
+        List<OrderFilm> orders = orderFilmRepo.findByAccountId(accountId);
+        model.addAttribute("orders", orders);
+        return "manage-order";
+    }
+      
 }

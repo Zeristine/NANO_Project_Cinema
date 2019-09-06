@@ -39,7 +39,7 @@ public class ShowTime implements Serializable {
     @JoinColumn(name = "roomId")
     private Room room;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "filmId")
     private Film film;
 

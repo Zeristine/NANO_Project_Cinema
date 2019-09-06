@@ -33,7 +33,7 @@ public class OrderController {
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
-    private FilmRepository filmRepository;
+    private FilmRepository filmRepository;    
     @Autowired
     private ShowTimeRepository showTimeRepository;
 
@@ -42,7 +42,7 @@ public class OrderController {
         model.addAttribute("films", filmRepository.findAll());
         return "order-book-main";
     }
-
+    
     @RequestMapping(value = "/form-order-room", method = RequestMethod.POST)
     public String getFormOrderRoom(
             ModelMap model,
