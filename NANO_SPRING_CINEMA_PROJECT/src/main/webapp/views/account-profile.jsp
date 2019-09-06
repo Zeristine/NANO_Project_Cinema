@@ -13,6 +13,7 @@
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script type="text/javascript" src="resources/js/login-register.js"></script>
         <script type="text/javascript" src="resources/js/main.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="resources/css/main.css"/>
     </head>
     <body>
@@ -52,7 +53,11 @@
         <h1>My Profile</h1>
         <div>
             <img src="${account.avatar}" style="width: 100px; height: 100px;"/>
-            ${account.firstname} ${account.lastname} 
+            <h4>${account.firstname} ${account.lastname}</h4>
+            Points: ${totalPoint}
+        </div>
+        <div>
+            <a href="form-change-password-${account.id}">Change password</a>
         </div>
     </body>
 </html>

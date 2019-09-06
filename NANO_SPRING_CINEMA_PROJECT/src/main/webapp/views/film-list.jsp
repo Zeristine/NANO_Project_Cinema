@@ -71,7 +71,7 @@
                                 <button>Book Ticket</button>
                             </a>
                         </c:if>                                                    
-                        <a href="film-detail-${f.id}-${f.name}" >
+                        <a href="film-detail-${f.id}" >
                             <button>Show Detail</button>
                         </a>                        
                     </div>                    
@@ -90,8 +90,8 @@
                         <li>Duration: ${f.duration}</li>
                         <li>Start Date: ${f.fromDate}</li>
                     </ul>
-                    <form action="film-detail" method="POST">
-                        <input type="hidden" name="id" value="${f.id}" />
+                    
+                    <form action="film-detail-${f.id}" method="GET">
                         <input type="submit" value="View Detail" />
                     </form>
                 </div>

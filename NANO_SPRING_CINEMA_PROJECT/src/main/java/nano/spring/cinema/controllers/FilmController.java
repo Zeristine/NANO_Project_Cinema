@@ -56,7 +56,7 @@ public class FilmController {
         return m;
     }
     
-    @RequestMapping(value = "/film-detail-{id}-{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "/film-detail-{id}", method = RequestMethod.GET)
     public String getFilmDetailById(@PathVariable(value = "id") long id, ModelMap m){
         Film film = filmRepository.findOne(id);
         m.addAttribute("film", film);

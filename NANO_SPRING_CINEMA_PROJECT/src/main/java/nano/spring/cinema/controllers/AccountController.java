@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import nano.spring.cinema.entities.Account;
 import nano.spring.cinema.repositories.AccountRepository;
+import nano.spring.cinema.repositories.PointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,6 +31,9 @@ public class AccountController {
     @Autowired
     private AccountRepository accountRepo;
     
+    @Autowired
+    private PointRepository pointRepo;
+    
     private static final Logger LOG = Logger.getLogger(AccountController.class.getName());
     
     @RequestMapping(value = "/form-register", method = RequestMethod.GET)
@@ -40,6 +44,13 @@ public class AccountController {
     @RequestMapping(value = "/form-login", method = RequestMethod.GET)
     public String loginPage() {
         return "login";
+    }
+    
+    @RequestMapping(value = "/form-change-password-{id}", method = RequestMethod.GET)
+    public String changePasswordPage(@PathVariable("id") Long id, ModelMap model) {
+        Account account = accountRepo.findOne(id);
+        model.addAttribute("account", account);
+        return "change-password";
     }
     
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -95,6 +106,41 @@ public class AccountController {
         Account account = accountRepo.findOne(id);
         model.addAttribute("account", account);
         LOG.log(Level.INFO, "user name: " + account.getUsername());
+        Integer point = pointRepo.getTotalPointByAccountId(id);
+        if (point == null) {
+            point = 0;
+        }
+        model.addAttribute("totalPoint", point);
+        LOG.log(Level.INFO, "Total point: " + point);
         return "account-profile";
+    }
+    
+    @RequestMapping(value = "change-password", method = RequestMethod.POST)
+    public String changePassword(ModelMap model,
+                                @RequestParam(value = "id") long id,
+                                @RequestParam(value = "username") String username,
+                                @RequestParam(value = "oldPassword") String oldPassword,
+                                @RequestParam(value = "newPassword") String newPassword,
+                                @RequestParam(value = "retype") String retype) {
+        Account account = accountRepo.findByUsernameAndPassword(username, oldPassword);
+        String msg = null;
+        if (account == null) {
+            msg = "Wrong password, try again";
+            LOG.log(Level.INFO, username + ": Wrong password");
+            account = accountRepo.findOne(id);
+        } else {
+            if (!newPassword.equals(retype)) {
+                msg = "Password and retype must match";
+            } else {
+                newPassword = newPassword.trim();
+                account.setPassword(newPassword);
+                accountRepo.save(account);
+                msg = "Update password successfully!";
+                LOG.log(Level.INFO, username + ": Change password successfully");
+            }
+        }
+        model.addAttribute("msg", msg);
+        model.addAttribute("account", account);
+        return "change-password";
     }
 }
