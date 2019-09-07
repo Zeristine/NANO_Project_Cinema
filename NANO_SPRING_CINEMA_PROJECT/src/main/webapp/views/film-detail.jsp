@@ -16,24 +16,23 @@
         <script type="text/javascript" src="resources/js/main.js"></script>
         <link rel="stylesheet" href="resources/css/main.css"/>
         <style>
-            table{
-                width: 100%;
+            table {
+                /*width: 100%;*/
                 text-align: left;
             }
             .img-content{
                 text-align: center;
                 height: 300px;                
             }
-            .img-content img{
-                height: 100%;
-            }
             .description{
                 text-align: left;   
             }
             iframe{
-                width: 100%;                
-                height: 800px;;
-            }            
+                width: 480px;
+            }
+            .film-title {
+                font-size: 30px;
+            }
         </style>
     </head>
     <body>        
@@ -68,13 +67,13 @@
         <table border="0">
             <tr>
                 <td rowspan="8" class="img-content">
-                    <img src="${film.image}"/>
+                    <img src="${film.image}" style="width: 200px"/>
                 </td>
             </tr>
             <tr>
-                <th colspan="1">
-                    <h2>${film.name}</h2>
-                </th>
+                <td colspan="1" style="padding-left: 50px; font-size: 20px; font-weight: bold">
+                    ${film.name}
+                </td>
                 <td>
                     <c:if test="${current eq true}">
                         <a href="book-ticket/${f.id}">
@@ -90,44 +89,35 @@
             <tr>
                 <th>Category:</th>
                 <td>
-                    <c:forEach var="cg" items="${film.categories}" >
-                        <a href="category-${cg.name}" >
-                            <button>${cg.name}</button>
-                        </a>
-                    </c:forEach>
+                    ${categories}
+                    <%--<c:forEach var="cg" items="${film.categories}" >--%>
+                        <!--<a href="category-${cg.name}" >-->
+                            <!--<button>${cg.name}</button>-->
+                        <!--</a>-->
+                    <%--</c:forEach>--%>
                 </td>
             </tr>
             <tr>
                 <th>Actors:</th>
-                <td></td>
+                <td>${actors}</td>
             </tr>
             <tr>
                 <th>Director</th>
-                <td></td>
+                <td>${director}</td>
             </tr>
             <tr>
                 <th>Duration</th>
-                <td>${film.duration}</td>
+                <td>${film.duration} minutes</td>
             </tr>
             <tr>
                 <th>Company</th>
                 <td>${film.company.name}</td>
-            </tr>
-            <tr>
-                <th colspan="4">Description</th>                
+            </tr>           
+        </table> 
+        <h3>Description</h3>
+        <p>${film.description}</p>            
+        <h3>Trailer</h3>            
+        <iframe width="420" height="280" src="${film.video}"></iframe> 
 
-            </tr>
-            <tr>
-                <td colspan="4" class="description" >
-                    <p>${film.description}</p>
-                </td>                
-            </tr>
-            <tr>
-                <th colspan="4">Trailer</th>                
-            </tr>
-            <tr>
-                <td colspan="4"><iframe width="420" height="280" src="${film.video}"></iframe> </td>
-            </tr>            
-        </table>                
     </body>
 </html>

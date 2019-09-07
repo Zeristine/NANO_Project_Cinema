@@ -5,6 +5,7 @@
  */
 package nano.spring.cinema.repositories;
 
+import java.util.List;
 import nano.spring.cinema.entities.Point;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +19,10 @@ public interface PointRepository extends JpaRepository<Point, Long> {
     
     @Query("select sum(p.numberOfPoint) from Point p where p.account.id = :accountId")
     public Integer getTotalPointByAccountId(@Param("accountId") long accountId);
+    
+    @Query("select p from Point p where p.account.id = :accountId "
+            + "and (p.ticket.order.status = 1 "
+            + "or p.ticket.order.status = 0 "
+            + "or p.ticket.order.status is null)")
+    public List<Point> findPointsEarnedByAccountId(@Param("accountId") long accountId);    
 }

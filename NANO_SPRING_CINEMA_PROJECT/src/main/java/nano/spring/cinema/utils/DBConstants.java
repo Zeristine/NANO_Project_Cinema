@@ -11,6 +11,10 @@ package nano.spring.cinema.utils;
  */
 public class DBConstants {
     
+//    ROLE
+    public static final String ROLE_ACTOR = "actor";
+    public static final String ROLE_DIRECTOR = "director";
+    
 //    ORDER FILM
     public static final int ORDERFILM_STATUS_CANCELED = -1;
     public static final int ORDERFILM_STATUS_BOOKED = 0;

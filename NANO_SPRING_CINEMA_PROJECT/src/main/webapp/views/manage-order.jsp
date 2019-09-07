@@ -21,7 +21,7 @@
                     <tr>
                         <th>Film</th>
                         <th>Order date</th>
-                        <th>Total price</th>
+                        <!--<th>Total price</th>-->
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -34,9 +34,7 @@
                             <td>
                                 ${order.orderDate}
                             </td>
-                            <td>
-                                ${order.totalPrice}
-                            </td>
+                            
                             <td>
                                 <c:choose>
                                     <c:when test="${order.status eq -1}">

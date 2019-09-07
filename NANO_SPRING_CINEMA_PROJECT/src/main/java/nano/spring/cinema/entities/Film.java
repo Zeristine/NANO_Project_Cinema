@@ -65,7 +65,7 @@ public class Film implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Category> categories;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "companyId")
     private Company company;
 
@@ -73,6 +73,16 @@ public class Film implements Serializable {
     private Set<FilmPersonRole> personrole;
 
     public Film() {
+    }
+
+    public Film(String name, Integer duration, Date fromDate, Date toDate, String image, String video, String description) {
+        this.name = name;
+        this.duration = duration;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.image = image;
+        this.video = video;
+        this.description = description;
     }
 
     public long getId() {

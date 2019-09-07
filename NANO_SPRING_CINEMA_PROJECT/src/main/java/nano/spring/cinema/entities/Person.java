@@ -39,6 +39,11 @@ public class Person implements Serializable {
         this.filmrole = new HashSet<>();
     }
 
+    public Person(String name) {
+        this.name = name;
+        this.filmrole = new HashSet<>();
+    }
+
     public long getId() {
         return id;
     }

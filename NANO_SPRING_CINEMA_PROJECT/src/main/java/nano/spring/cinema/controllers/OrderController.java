@@ -7,12 +7,15 @@ package nano.spring.cinema.controllers;
 
 import java.util.Calendar;
 import java.util.StringTokenizer;
+import nano.spring.cinema.entities.Account;
 import nano.spring.cinema.entities.OrderFilm;
+import nano.spring.cinema.entities.Point;
 import nano.spring.cinema.entities.ShowTime;
 import nano.spring.cinema.entities.Ticket;
 import nano.spring.cinema.repositories.AccountRepository;
 import nano.spring.cinema.repositories.FilmRepository;
 import nano.spring.cinema.repositories.OrderRepository;
+import nano.spring.cinema.repositories.PointRepository;
 import nano.spring.cinema.repositories.ShowTimeRepository;
 import nano.spring.cinema.repositories.TicketRepository;
 import nano.spring.cinema.utils.DBConstants;
@@ -41,6 +44,8 @@ public class OrderController {
     private AccountRepository accountRepository;
     @Autowired
     private TicketRepository ticketRepository;
+    @Autowired
+    private PointRepository pointRepository;
 
     @RequestMapping(value = "/form-order", method = RequestMethod.GET)
     public String getFormOrder(ModelMap model) {
@@ -93,14 +98,15 @@ public class OrderController {
     ) {
         try {
             OrderFilm o = new OrderFilm();
-            o.setAccount(accountRepository.findOne(aId));
+            Account acc = accountRepository.findOne(aId);
+            o.setAccount(acc);
             o.setShowTime(showTimeRepository.findOne(stId));
             o.setStatus(DBConstants.ORDERFILM_STATUS_BOOKED);
             o.setOrderDate(Calendar.getInstance().getTime());
             orderRepository.save(o);
             for (StringTokenizer st = new StringTokenizer(seatStr, "|"); st.hasMoreTokens();) {
                 String token = st.nextToken();
-                addSelectedSeat(token, o);
+                addSelectedSeat(token, o, acc);
             }
             return "success";
         } catch (Exception e) {
@@ -117,12 +123,16 @@ public class OrderController {
         return "order-book-phase-1-part";
     }
 
-    private void addSelectedSeat(String seat, OrderFilm o) {
+    private void addSelectedSeat(String seat, OrderFilm o, Account acc) {
         Ticket t = new Ticket();
         t.setOrder(o);
         t.setPointAward(DBConstants.POINT_PER_TICKET);
         t.setPosition(seat);
         t.setStatus(DBConstants.ORDERFILM_STATUS_BOOKED + "");
         ticketRepository.save(t);
+        //save point
+        Point p = new Point(DBConstants.POINT_PER_TICKET, acc);
+        p.setTicket(t);
+        pointRepository.save(p);
     }
 }

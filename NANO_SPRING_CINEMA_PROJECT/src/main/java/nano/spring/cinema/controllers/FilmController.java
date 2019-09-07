@@ -8,10 +8,14 @@ package nano.spring.cinema.controllers;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import nano.spring.cinema.entities.Category;
 import nano.spring.cinema.entities.Film;
+import nano.spring.cinema.entities.FilmPersonRole;
 import nano.spring.cinema.repositories.FilmRepository;
+import nano.spring.cinema.utils.DBConstants;
 import nano.spring.cinema.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,12 +68,42 @@ public class FilmController {
         if (!film.getFromDate().after(currentDate)) {
             m.addAttribute("current", true);
         }
+        //video url
         String video = film.getVideo();
         int pos = video.lastIndexOf("youtube.com/");
         pos += "youtube.com/".length();
         video = StringUtils.insertString(video, pos, "embed/");
         video = video.replace("watch?v=", "");
         film.setVideo(video);
+        //actor & director
+        Set<FilmPersonRole> roles = film.getPersonrole();
+        if (roles != null && roles.size() > 0) {
+            String actors = "";
+            String director = "";
+            for (FilmPersonRole role : roles) {
+                if (role.getRole() != null) {
+                    if (role.getRole().getName().equals(DBConstants.ROLE_ACTOR)) {
+                        actors += role.getPerson().getName() + ", ";
+                    } else if (role.getRole().getName().equals(DBConstants.ROLE_DIRECTOR)) {
+                        director += role.getPerson().getName();
+                    } 
+                }
+            }
+            actors = actors.trim();
+            actors = actors.substring(0, actors.length()-1);
+            m.addAttribute("director", director);
+            m.addAttribute("actors", actors);
+        }
+        // categories
+        Set<Category> categories = film.getCategories();
+        if (categories != null && !categories.isEmpty()) {
+            String categoriesStr = "";
+            for (Category category : categories) {
+                categoriesStr += category.getName() + ", ";
+            }
+            categoriesStr = categoriesStr.trim();
+            m.addAttribute("categories", categoriesStr.substring(0, categoriesStr.length() - 1));
+        }
         LOG.log(Level.INFO, "film id: " + id + " - film name: " + film.getName());
         return "film-detail";
     }

@@ -39,6 +39,11 @@ public class Company implements Serializable {
         this.films = new HashSet<>();
     }
 
+    public Company(String name) {
+        this.name = name;
+        this.films = new HashSet<>();
+    }
+
     public long getId() {
         return id;
     }
