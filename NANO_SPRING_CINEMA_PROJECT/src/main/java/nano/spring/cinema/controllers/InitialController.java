@@ -222,6 +222,7 @@ public class InitialController {
 
     private void initFilmPersonRole(){
         List<FilmPersonRole> list = new ArrayList<FilmPersonRole>();
+        //AVENGER
         list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
                 personRepository.findByName("Anthony Russo, Joe Russo").get(0),
                 roleRepository.findByName(DBConstants.ROLE_DIRECTOR).get(0)));
@@ -242,6 +243,43 @@ public class InitialController {
                 roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
         list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
                 personRepository.findByName("Chris Evans").get(0),
+                roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
+        //mib
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("Men in Black: International").get(0),
+                personRepository.findByName("F. Gary Gray").get(0),
+                roleRepository.findByName(DBConstants.ROLE_DIRECTOR).get(0)));
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("Men in Black: International").get(0),
+                personRepository.findByName("Tessa Thompson").get(0),
+                roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("Men in Black: International").get(0),
+                personRepository.findByName("Kumail Nanjiani").get(0),
+                roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
+        //DORAEMON
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+                personRepository.findByName("Kazuaki Imai").get(0),
+                roleRepository.findByName(DBConstants.ROLE_DIRECTOR).get(0)));
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+                personRepository.findByName("Wasabi Mizuta").get(0),
+                roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+                personRepository.findByName("Megumi Ohara").get(0),
+                roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+                personRepository.findByName("Yumi Kakazu").get(0),
+                roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+                personRepository.findByName("Aoi Yuki").get(0),
+                roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
+        
+        //WEATHER
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("Weathering with You").get(0),
+                personRepository.findByName("F. Gary Gray").get(0),
+                roleRepository.findByName(DBConstants.ROLE_DIRECTOR).get(0)));
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("Weathering with You").get(0),
+                personRepository.findByName("Nana Mori").get(0),
+                roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("Weathering with You").get(0),
+                personRepository.findByName("Kotaro Daigo").get(0),
                 roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
         filmPersonRoleRepository.save(list);
     }
