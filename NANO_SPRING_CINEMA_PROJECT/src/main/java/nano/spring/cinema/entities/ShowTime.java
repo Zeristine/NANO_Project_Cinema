@@ -118,7 +118,7 @@ public class ShowTime implements Serializable {
         List<String> list = new ArrayList<>();
         for (OrderFilm order : orders) {
             for (Ticket ticket : order.getTickets()) {
-                list.add(ticket.getPosition());
+                list.add(ticket.getPosition());                
             }
         }
         return list;

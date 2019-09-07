@@ -43,11 +43,18 @@
                 <tr>
                     <th>Choose Amount</th>
                     <td>
-                        <select name="amount" onchange="removeSeatDisable(this)" >
-                            <option>Select number of seats</option>
-                            <c:forEach begin="0" end="${24 - showTime.totalBookedTicket}" varStatus="counter" >
-                                <option value="${counter.count}" >${counter.count}</option>
-                            </c:forEach>
+                        <select name="amount" onchange="removeSeatDisable(this)" >                            
+                            <c:choose>
+                                <c:when test="${showTime.totalBookedTicket lt 24}" >
+                                    <option>Select number of seats</option>
+                                    <c:forEach begin="0" end="${24 - showTime.totalBookedTicket}" varStatus="counter" >
+                                        <option value="${counter.count}" >${counter.count}</option>
+                                    </c:forEach>
+                                </c:when>                            
+                                <c:otherwise>
+                                    <option>There is no seat left to choose...</option>
+                                </c:otherwise>
+                            </c:choose>                           
                         </select>
                     </td>
                     <th>Ticket(s)</th>
@@ -89,7 +96,7 @@
                         <td>
                             <button value="B-${counter.count}" 
                                     <c:forEach var="pos" items="${showTime.bookedSeats}" >
-                                        <c:forTokens var="num" items="${pos}" delims="-" varStatus="mcounter" >
+                                        <c:forTokens var="val" items="${pos}" delims="-" varStatus="mcounter" >
                                             <c:if test="${mcounter.count == 1}" >
                                                 <c:set var="row" value="${val}" />
                                             </c:if>
@@ -109,7 +116,7 @@
                         <td>
                             <button value="C-${counter.count}" 
                                     <c:forEach var="pos" items="${showTime.bookedSeats}" >
-                                        <c:forTokens var="num" items="${pos}" delims="-" varStatus="mcounter" >
+                                        <c:forTokens var="val" items="${pos}" delims="-" varStatus="mcounter" >
                                             <c:if test="${mcounter.count == 1}" >
                                                 <c:set var="row" value="${val}" />
                                             </c:if>
@@ -129,7 +136,7 @@
                         <td>
                             <button value="D-${counter.count}" 
                                     <c:forEach var="pos" items="${showTime.bookedSeats}" >
-                                        <c:forTokens var="num" items="${pos}" delims="-" varStatus="mcounter" >
+                                        <c:forTokens var="val" items="${pos}" delims="-" varStatus="mcounter" >
                                             <c:if test="${mcounter.count == 1}" >
                                                 <c:set var="row" value="${val}" />
                                             </c:if>
@@ -149,7 +156,7 @@
                         <td>
                             <button value="E-${counter.count}" 
                                     <c:forEach var="pos" items="${showTime.bookedSeats}" >
-                                        <c:forTokens var="num" items="${pos}" delims="-" varStatus="mcounter" >
+                                        <c:forTokens var="val" items="${pos}" delims="-" varStatus="mcounter" >
                                             <c:if test="${mcounter.count == 1}" >
                                                 <c:set var="row" value="${val}" />
                                             </c:if>
@@ -185,7 +192,7 @@
                         </button>
                     </td>
                     <td>
-                        <button onclick="toConfirmPhase()" disabled name="button-seat">
+                        <button onclick="toConfirmPhase()"  name="button-seat">
                             Confirm
                         </button>
                     </td>

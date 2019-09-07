@@ -15,8 +15,16 @@ $(document).ready(function () {
         var phase = window.localStorage.getItem("order");
         if (phase == 2) {
             getRoomPhase(window.localStorage.getItem("showtime"));
-        } else {
-            $("select[name=film]").val(window.localStorage.getItem("film"));
+        } else if (phase == 3) {
+            var values = window.localStorage.getItem("seats");
+            $.ajax({
+                type: 'POST',
+                url: "order-book-confirm",
+                data: {id: window.localStorage.getItem("showtime"), seats: values},
+                success: function (a) {
+                    $("#main-content").html(a);
+                }
+            });
         }
     }
 
@@ -85,9 +93,11 @@ function clearAllOrder() {
 function backToPrevious() {
     var phase = window.localStorage.getItem("order") - 1;
     if (phase == 1) {
+        window.localStorage.setItem("order", 1);
         window.location.reload();
     } else if (phase == 2) {
-        getRoomPhase();
+        window.localStorage.setItem("order", 2);
+        getRoomPhase(window.localStorage.getItem("showtime"));
     }
 }
 
@@ -101,12 +111,40 @@ function select(button) {
 
 function toConfirmPhase() {
     var selecteds = $("button[class=selected]");
-    var values = "";
-    for (var i = 0; i < selecteds.length - 1; i++) {
-        values += selecteds[i].value+"|";
-    }    
+    if ((selecteds.length - 1) == 0) {
+        alert("Please choose seat to go to cofirm section");
+    } else {
+        var values = "";
+        window.localStorage.setItem("order", 3);
+        for (var i = 0; i < selecteds.length - 1; i++) {
+            values += selecteds[i].value + "|";
+        }
+        window.localStorage.setItem("seats", values);
+        $.ajax({
+            type: 'POST',
+            url: "order-book-confirm",
+            data: {id: window.localStorage.getItem("showtime"), seats: values},
+            success: function (a) {
+                $("#main-content").html(a);
+            }
+        });
+    }
 }
 
-function removeSeatDisable(select){
-    
+function bookOrder() {
+    $.ajax({
+        type: 'POST',
+        url: "order-save",
+        data: {stId: window.localStorage.getItem("showtime"),
+            aId: window.localStorage.getItem("id"),
+            seats: window.localStorage.getItem("seats")},
+        success: function (a) {
+            if (a == "success") {
+                alert("Ticket Booking succeeds");
+            } else if (a == "fail") {
+                alert("Ticket Booking fails");
+            }
+            clearAllOrder();
+        }
+    });
 }
