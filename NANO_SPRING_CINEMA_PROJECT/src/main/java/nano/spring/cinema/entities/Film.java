@@ -62,14 +62,14 @@ public class Film implements Serializable {
     @Column(name = "filmType")
     private String filmType;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     private Set<Category> categories;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "companyId")
     private Company company;
 
-    @OneToMany(mappedBy = "film", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "film", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private Set<FilmPersonRole> personrole;
 
     public Film() {

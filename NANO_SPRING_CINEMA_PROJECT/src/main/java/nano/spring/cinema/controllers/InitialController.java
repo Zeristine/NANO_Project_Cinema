@@ -24,8 +24,10 @@ import nano.spring.cinema.entities.TimeTable;
 import nano.spring.cinema.repositories.AccountRepository;
 import nano.spring.cinema.repositories.CategoryRepository;
 import nano.spring.cinema.repositories.CompanyRepository;
+import nano.spring.cinema.repositories.FilmPersonRoleRepository;
 import nano.spring.cinema.repositories.FilmRepository;
 import nano.spring.cinema.repositories.OrderRepository;
+import nano.spring.cinema.repositories.PersonRepository;
 import nano.spring.cinema.repositories.RoleRepository;
 import nano.spring.cinema.repositories.RoomRepository;
 import nano.spring.cinema.repositories.ShowTimeRepository;
@@ -51,7 +53,7 @@ public class InitialController {
     @Autowired
     private CompanyRepository companyRepository;
     @Autowired
-    private FilmRepository filmRepository;    
+    private FilmRepository filmRepository;
     @Autowired
     private TimeTableRepository timeTableRepository;
     @Autowired
@@ -60,80 +62,81 @@ public class InitialController {
     private RoomRepository roomRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private FilmPersonRoleRepository filmPersonRoleRepository;
+    @Autowired
+    private PersonRepository personRepository;
 
     @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
     public String toHomePage() {
-        initRoles();
-        initPersons();
-        initCategories();
-        initCompanies();
-        initFilms();
         if (filmRepository.count() == 0) {
-            createData();
-        }
-        initAccounts();
+//            createData();
+            initRoles();
+            initPersons();
+            initCategories();
+            initCompanies();
+            initFilms();
+            initAccounts();
+            initFilmPersonRole();
+            addTimeTable(2, 4, "6:00:00", "9:59:59", 100000);
+            addTimeTable(2, 4, "10:00:00", "11:59:59", 120000);
+            addTimeTable(2, 4, "12:00:00", "16:59:59", 150000);
+            addTimeTable(2, 4, "17:00:00", "19:59:59", 200000);
+            addTimeTable(2, 4, "20:00:00", "23:59:59", 180000);
+            addTimeTable(2, 4, "24:00:00", "5:59:59", 50000);
+            addTimeTable(5, 6, "6:00:00", "9:59:59", 50000);
+            addTimeTable(5, 6, "10:00:00", "11:59:59", 100000);
+            addTimeTable(5, 6, "12:00:00", "16:59:59", 120000);
+            addTimeTable(5, 6, "17:00:00", "19:59:59", 150000);
+            addTimeTable(5, 6, "20:00:00", "23:59:59", 120000);
+            addTimeTable(5, 6, "24:00:00", "5:59:59", 30000);
+            addTimeTable(7, 1, "6:00:00", "9:59:59", 120000);
+            addTimeTable(7, 1, "10:00:00", "11:59:59", 150000);
+            addTimeTable(7, 1, "12:00:00", "16:59:59", 180000);
+            addTimeTable(7, 1, "17:00:00", "19:59:59", 200000);
+            addTimeTable(7, 1, "20:00:00", "23:59:59", 180000);
+            addTimeTable(7, 1, "24:00:00", "5:59:59", 100000);
+        }        
         return "home";
     }
 
-    private void createData() {
-        Film f = new Film();
-        f.setName("The Avengers");
-        f.setImage("https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX182_CR0,0,182,268_AL_.jpg");
-        f.setCategories(new HashSet<Category>());
-        f.setDuration(120);
-        f.setDescription("The heros gather around...");
-        f.setVideo("https://www.youtube.com/watch?v=eOrNdBpGMv8");
-        f.setPersonrole(new HashSet<FilmPersonRole>());
-        f.setFromDate(new Date());
-        f.setToDate(new Date());
-        f = filmRepository.save(f);
-        Company c = new Company();
-        c.setName("Marvel Studio");
-        f.setCompany(companyRepository.save(c));
-        addCategory("Action");
-        addCategory("Horror");
-        addCategory("Adventure");
-        addCategory("Comedy");
-        f.getCategories().addAll(categoryRepository.findAll());
-        filmRepository.save(f);
-        Film f2 = new Film();
-        f2.setName("The Avengers: End Game");
-        f2.setImage("https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg");
-        f2.setCategories(new HashSet<Category>());
-        f2.setDuration(120);
-        f2.setDescription("The heros gather around...");
-        f2.setVideo("https://www.youtube.com/watch?v=TcMBFSGVi1c");
-        f2.setPersonrole(new HashSet<FilmPersonRole>());
-        f2.setFromDate(new Date());
-        f2.setToDate(new Date());        
-        f2 = filmRepository.save(f2);
-        f2.getCategories().addAll(categoryRepository.findAll());
-        f2.setCompany(companyRepository.save(c));
-        filmRepository.save(f2);
-        addTimeTable(2, 4, "6:00:00", "9:59:59", 100000);
-        addTimeTable(2, 4, "10:00:00", "11:59:59", 120000);
-        addTimeTable(2, 4, "12:00:00", "16:59:59", 150000);
-        addTimeTable(2, 4, "17:00:00", "19:59:59", 200000);
-        addTimeTable(2, 4, "20:00:00", "23:59:59", 180000);
-        addTimeTable(2, 4, "24:00:00", "5:59:59", 50000);
-        addTimeTable(5, 6, "6:00:00", "9:59:59", 50000);
-        addTimeTable(5, 6, "10:00:00", "11:59:59", 100000);
-        addTimeTable(5, 6, "12:00:00", "16:59:59", 120000);
-        addTimeTable(5, 6, "17:00:00", "19:59:59", 150000);
-        addTimeTable(5, 6, "20:00:00", "23:59:59", 120000);
-        addTimeTable(5, 6, "24:00:00", "5:59:59", 30000);
-        addTimeTable(7, 1, "6:00:00", "9:59:59", 120000);
-        addTimeTable(7, 1, "10:00:00", "11:59:59", 150000);
-        addTimeTable(7, 1, "12:00:00", "16:59:59", 180000);
-        addTimeTable(7, 1, "17:00:00", "19:59:59", 200000);
-        addTimeTable(7, 1, "20:00:00", "23:59:59", 180000);
-        addTimeTable(7, 1, "24:00:00", "5:59:59", 100000);
-        addShowTime(f);
-        addShowTime(f);
-        addShowTime(f2);
-        addShowTime(f2);
-        addShowTime(f2);
-    }
+//    private void createData() {
+//        Film f = new Film();
+//        f.setName("The Avengers");
+//        f.setImage("https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX182_CR0,0,182,268_AL_.jpg");
+//        f.setCategories(new HashSet<Category>());
+//        f.setDuration(120);
+//        f.setDescription("The heros gather around...");
+//        f.setVideo("https://www.youtube.com/watch?v=eOrNdBpGMv8");
+//        f.setPersonrole(new HashSet<FilmPersonRole>());
+//        f.setFromDate(new Date());
+//        f.setToDate(new Date());
+//        f = filmRepository.save(f);
+//        Company c = new Company();
+//        c.setName("Marvel Studio");
+//        f.setCompany(companyRepository.save(c));
+//        addCategory("Action");
+//        addCategory("Horror");
+//        addCategory("Adventure");
+//        addCategory("Comedy");
+//        f.getCategories().addAll(categoryRepository.findAll());
+//        filmRepository.save(f);
+//        Film f2 = new Film();
+//        f2.setName("The Avengers: End Game");
+//        f2.setImage("https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg");
+//        f2.setCategories(new HashSet<Category>());
+//        f2.setDuration(120);
+//        f2.setDescription("The heros gather around...");
+//        f2.setVideo("https://www.youtube.com/watch?v=TcMBFSGVi1c");
+//        f2.setPersonrole(new HashSet<FilmPersonRole>());
+//        f2.setFromDate(new Date());
+//        f2.setToDate(new Date());
+//        f2 = filmRepository.save(f2);
+//        f2.getCategories().addAll(categoryRepository.findAll());
+//        f2.setCompany(companyRepository.save(c));
+//        filmRepository.save(f2);
+//        
+//    }
 
     private void addCategory(String categoryname) {
         Category c = new Category();
@@ -156,17 +159,17 @@ public class InitialController {
         }
     }
 
-    private void addShowTime(Film f){
+    private void addShowTime(Film f) {
         ShowTime st = new ShowTime();
         Room r = new Room();
         r.setIsAvailable(true);
         st.setRoom(roomRepository.save(r));
         st.setShowDate(new Date());
         st.setTicketPrice(10000);
-        st.setFilm(f);        
+        st.setFilm(f);
         showTimeRepository.save(st);
     }
-    
+
     private void initAccounts() {
         if (accountRepository.count() > 0) {
             return;
@@ -177,7 +180,7 @@ public class InitialController {
                 "0123456789", "https://i.pinimg.com/originals/30/88/e1/3088e1abbefe13a1754bd56deafcde2d.jpg"));
         accountRepository.save(accounts);
     }
-    
+
     private void initRoles() {
         if (roleRepository.count() == 0) {
             Role actor = new Role(DBConstants.ROLE_ACTOR);
@@ -186,9 +189,9 @@ public class InitialController {
             roles.add(actor);
             roles.add(director);
             roleRepository.save(roles);
-        }       
+        }
     }
-     
+
     private void initPersons() {
         List<Person> persons = new ArrayList<>();
         //weathering with you
@@ -214,6 +217,33 @@ public class InitialController {
         persons.add(new Person("Yumi Kakazu"));
         persons.add(new Person("Subaru Kimura"));
         persons.add(new Person("Aoi Yūki"));
+        personRepository.save(persons);
+    }
+
+    private void initFilmPersonRole(){
+        List<FilmPersonRole> list = new ArrayList<FilmPersonRole>();
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+                personRepository.findByName("Anthony Russo, Joe Russo").get(0),
+                roleRepository.findByName(DBConstants.ROLE_DIRECTOR).get(0)));
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+                personRepository.findByName("Robert Downey Jr.").get(0),
+                roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+                personRepository.findByName("Mark Ruffalo").get(0),
+                roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+                personRepository.findByName("Chris Hemsworth").get(0),
+                roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+                personRepository.findByName("Jeremy Renner").get(0),
+                roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+                personRepository.findByName("Chris Hemsworth").get(0),
+                roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+                personRepository.findByName("Chris Evans").get(0),
+                roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
+        filmPersonRoleRepository.save(list);
     }
     
     private void initCategories() {
@@ -229,7 +259,7 @@ public class InitialController {
         categories.add(new Category("Adventure"));
         categoryRepository.save(categories);
     }
-    
+
     private void initCompanies() {
         if (companyRepository.count() > 0) {
             return;
@@ -244,58 +274,68 @@ public class InitialController {
         companies.add(new Company("Columbia Pictures"));
         companyRepository.save(companies);
     }
-    
+
     private void initFilms() {
         if (filmRepository.count() > 0) {
             return;
         }
         List<Film> films = new ArrayList<>();
         //END GAME
-        Film endgame = new Film("The Avengers: End Game", 180, 
-            DateUtils.getDateInstance(1, 9, 2019), DateUtils.getDateInstance(30, 9, 2019), 
-            "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg", 
-            "https://www.youtube.com/watch?v=TcMBFSGVi1c", 
-            "After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe.");
+        Film endgame = new Film("The Avengers: End Game", 180,
+                DateUtils.getDateInstance(1, 9, 2019), DateUtils.getDateInstance(30, 9, 2019),
+                "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg",
+                "https://www.youtube.com/watch?v=TcMBFSGVi1c",
+                "After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe.");
         Company marvel = companyRepository.findByName("Marvel Studios");
-        endgame.setCompany(marvel);
+        endgame.setCompany(marvel);        
+        endgame.setPersonrole(new HashSet<FilmPersonRole>());        
+        endgame.setCategories(new HashSet());
+        endgame.getCategories().add(categoryRepository.findByName("Action").get(0));
+        endgame.getCategories().add(categoryRepository.findByName("Adventure").get(0));
+        endgame.getCategories().add(categoryRepository.findByName("Scifi").get(0));
         films.add(endgame);
         //MIB
-        Film mib = new Film("Men in Black: International", 115, 
-            DateUtils.getDateInstance(3, 9, 2019), DateUtils.getDateInstance(3, 10, 2019), 
-            "https://is3-ssl.mzstatic.com/image/thumb/Video123/v4/1a/a7/63/1aa7637e-54f9-c4e3-439a-1063e37733e0/pr_source.lsr/268x0w.jpg", 
-            "https://www.youtube.com/watch?v=BV-WEb2oxLk", 
-            "The Men in Black have always protected the Earth from the scum of the universe. In this new adventure, they tackle their biggest threat to date: a mole in the Men in Black organization.");
+        Film mib = new Film("Men in Black: International", 115,
+                DateUtils.getDateInstance(3, 9, 2019), DateUtils.getDateInstance(3, 10, 2019),
+                "https://is3-ssl.mzstatic.com/image/thumb/Video123/v4/1a/a7/63/1aa7637e-54f9-c4e3-439a-1063e37733e0/pr_source.lsr/268x0w.jpg",
+                "https://www.youtube.com/watch?v=BV-WEb2oxLk",
+                "The Men in Black have always protected the Earth from the scum of the universe. In this new adventure, they tackle their biggest threat to date: a mole in the Men in Black organization.");
         Company columbia = companyRepository.findByName("Columbia Pictures");
         mib.setCompany(columbia);
+        mib.setCategories(new HashSet());
+        mib.getCategories().add(categoryRepository.findByName("Action").get(0));
+        mib.getCategories().add(categoryRepository.findByName("Adventure").get(0));
         films.add(mib);
         //WEATHER
-        Film weather = new Film("Weathering with You", 120, 
-            DateUtils.getDateInstance(10, 8, 2019), DateUtils.getDateInstance(20, 9, 2019), 
-            "https://m.media-amazon.com/images/M/MV5BYjEzMjJjNzctNmFmMy00MTE4LTkwZTItYjY3Y2VjZmYxNmE3XkEyXkFqcGdeQXVyOTI4MzgyNTk@._V1_.jpg", 
-            "https://www.youtube.com/watch?v=Q6iK6DjV_iE", 
-            "A high-school boy who has run away to Tokyo befriends a girl who appears to be able to manipulate the weather.");
+        Film weather = new Film("Weathering with You", 120,
+                DateUtils.getDateInstance(10, 8, 2019), DateUtils.getDateInstance(20, 9, 2019),
+                "https://m.media-amazon.com/images/M/MV5BYjEzMjJjNzctNmFmMy00MTE4LTkwZTItYjY3Y2VjZmYxNmE3XkEyXkFqcGdeQXVyOTI4MzgyNTk@._V1_.jpg",
+                "https://www.youtube.com/watch?v=Q6iK6DjV_iE",
+                "A high-school boy who has run away to Tokyo befriends a girl who appears to be able to manipulate the weather.");
         Company weatherComp = companyRepository.findByName("CoMix Wave Films Story Inc");
         weather.setCompany(weatherComp);
+        weather.setCategories(new HashSet());
+        weather.getCategories().add(categoryRepository.findByName("Adventure").get(0));
+        weather.getCategories().add(categoryRepository.findByName("Anime").get(0));
         films.add(weather);
         //DORAEMON
-        Film doreamon = new Film("Doraemon the Movie: Nobita's Treasure Island", 110, 
-            DateUtils.getDateInstance(15, 8, 2019), DateUtils.getDateInstance(15, 10, 2019), 
-            "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Doraemon_movie_2018.jpeg/220px-Doraemon_movie_2018.jpeg", 
-            "https://www.youtube.com/watch?v=4TXbUvMHijc", 
-            "In the story, Doraemon, Nobita, Shizuka, Gian, and Suneo set out on an adventure in the Caribbean Sea. Nobita is the captain of a ship and fights his enemies on board.");
+        Film doreamon = new Film("Doraemon the Movie: Nobita's Treasure Island", 110,
+                DateUtils.getDateInstance(15, 8, 2019), DateUtils.getDateInstance(15, 10, 2019),
+                "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Doraemon_movie_2018.jpeg/220px-Doraemon_movie_2018.jpeg",
+                "https://www.youtube.com/watch?v=4TXbUvMHijc",
+                "In the story, Doraemon, Nobita, Shizuka, Gian, and Suneo set out on an adventure in the Caribbean Sea. Nobita is the captain of a ship and fights his enemies on board.");
         Company doreamonComp = companyRepository.findByName("Shin-Ei Animation");
         doreamon.setCompany(doreamonComp);
+        doreamon.setCategories(new HashSet());
+        doreamon.getCategories().add(categoryRepository.findByName("Adventure").get(0));
+        doreamon.getCategories().add(categoryRepository.findByName("Anime").get(0));
         films.add(doreamon);
         filmRepository.save(films);
+        addShowTime(doreamon);
+        addShowTime(doreamon);
+        addShowTime(weather);
+        addShowTime(weather);
+        addShowTime(weather);
     }
-    
-//    private void setCategories() {
-//        List<Category> list = categoryRepository.findAll();
-//        if (list == null || list.isEmpty()) {
-//            return;
-//        }
-////        for (int i = 0; i < list.size(); i++) {
-////            if ()
-////        }
-//    }
+
 }

@@ -5,8 +5,10 @@
  */
 package nano.spring.cinema.repositories;
 
+import java.util.List;
 import nano.spring.cinema.entities.FilmPersonRole;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,4 +18,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FilmPersonRoleRepository extends JpaRepository<FilmPersonRole, Long> {
 
+    @Query("Select fpr From FilmPersonRole fpr Where fpr.person.name = ?1")
+    List<FilmPersonRole> findByPersonName(String name);
 }
