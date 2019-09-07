@@ -255,19 +255,19 @@ public class InitialController {
                 personRepository.findByName("Kumail Nanjiani").get(0),
                 roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
         //DORAEMON
-        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("Doraemon the Movie: Nobita's Treasure Island").get(0),
                 personRepository.findByName("Kazuaki Imai").get(0),
                 roleRepository.findByName(DBConstants.ROLE_DIRECTOR).get(0)));
-        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("Doraemon the Movie: Nobita's Treasure Island").get(0),
                 personRepository.findByName("Wasabi Mizuta").get(0),
                 roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
-        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("Doraemon the Movie: Nobita's Treasure Island").get(0),
                 personRepository.findByName("Megumi Ohara").get(0),
                 roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
-        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("Doraemon the Movie: Nobita's Treasure Island").get(0),
                 personRepository.findByName("Yumi Kakazu").get(0),
                 roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
-        list.add(new FilmPersonRole(filmRepository.findFilmsByName("The Avengers: End Game").get(0),
+        list.add(new FilmPersonRole(filmRepository.findFilmsByName("Doraemon the Movie: Nobita's Treasure Island").get(0),
                 personRepository.findByName("Aoi Yuki").get(0),
                 roleRepository.findByName(DBConstants.ROLE_ACTOR).get(0)));
         

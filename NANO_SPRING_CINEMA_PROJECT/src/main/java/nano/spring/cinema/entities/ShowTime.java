@@ -23,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import nano.spring.cinema.utils.DBConstants;
 
 /**
  *
@@ -109,16 +110,20 @@ public class ShowTime implements Serializable {
     public int getTotalBookedTicket() {
         int count = 0;
         for (OrderFilm order : orders) {
-            count += order.getTickets().size();
+            if (order.getStatus() != DBConstants.ORDERFILM_STATUS_CANCELED) {
+                count += order.getTickets().size();
+            }
         }
         return count;
     }
 
-    public List<String> getBookedSeats(){
+    public List<String> getBookedSeats() {
         List<String> list = new ArrayList<>();
         for (OrderFilm order : orders) {
-            for (Ticket ticket : order.getTickets()) {
-                list.add(ticket.getPosition());                
+            if (order.getStatus() != DBConstants.ORDERFILM_STATUS_CANCELED) {
+                for (Ticket ticket : order.getTickets()) {
+                    list.add(ticket.getPosition());
+                }
             }
         }
         return list;

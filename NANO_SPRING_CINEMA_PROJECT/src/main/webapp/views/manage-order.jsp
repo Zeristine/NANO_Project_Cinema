@@ -12,11 +12,42 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Spring Cinema</title>
+        <link rel="stylesheet" href="resources/css/main.css"/>                
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>        
+        <script type="text/javascript" src="resources/js/login-register.js"></script>        
     </head>
     <body>
+        <div class="header" >
+            <div class="left" >
+                <button onclick="reload()" >NANO Spring Cinema</button>
+            </div>
+            <div class="right hide" name="not-logged">
+                <a href="form-register" >
+                    <button>Register</button>
+                </a>
+                <a href="form-login">
+                    <button>Log in</button>
+                </a>                
+                <a href="ticket-price">
+                    <button class="">Ticket Price</button>                
+                </a>                
+            </div>
+            <div class="right hide" name="logged">
+                <button onclick="logout()" >Log out</button>           
+                <a name="logged-link">
+                    <button name="logged"></button>    
+                </a>
+                <a href="form-order">
+                    <button class="">Book Ticket</button>                    
+                </a>
+                <a href="ticket-price">
+                    <button class="">Ticket Price</button>                
+                </a>                
+            </div>
+        </div>        
         <h1>Manage Orders</h1>
         <c:if test="${not empty orders}">
-            <table border="0">
+            <table border="1">
                 <thead>
                     <tr>
                         <th>Film</th>
@@ -34,7 +65,7 @@
                             <td>
                                 ${order.orderDate}
                             </td>
-                            
+
                             <td>
                                 <c:choose>
                                     <c:when test="${order.status eq -1}">

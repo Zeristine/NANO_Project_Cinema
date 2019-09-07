@@ -71,16 +71,9 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="1" style="padding-left: 50px; font-size: 20px; font-weight: bold">
+                <td colspan="2" style="padding-left: 50px; font-size: 20px; font-weight: bold">
                     ${film.name}
-                </td>
-                <td>
-                    <c:if test="${current eq true}">
-                        <a href="book-ticket/${f.id}">
-                            <button>Book Ticket</button>
-                        </a>    
-                    </c:if>
-                </td>
+                </td>                
             </tr>
             <tr>
                 <th>Time:</th>
@@ -89,12 +82,7 @@
             <tr>
                 <th>Category:</th>
                 <td>
-                    ${categories}
-                    <%--<c:forEach var="cg" items="${film.categories}" >--%>
-                        <!--<a href="category-${cg.name}" >-->
-                            <!--<button>${cg.name}</button>-->
-                        <!--</a>-->
-                    <%--</c:forEach>--%>
+                    ${categories}                    
                 </td>
             </tr>
             <tr>
